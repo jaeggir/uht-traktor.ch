@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/uht-rest/uht-rest.iml" filepath="$PROJECT_DIR$/uht-rest/uht-rest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uht-web/uht-web.iml" filepath="$PROJECT_DIR$/uht-web/uht-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uht-web-package/uht-web-package.iml" filepath="$PROJECT_DIR$/uht-web-package/uht-web-package.iml" />
+      <module fileurl="file://$PROJECT_DIR$/website.iml" filepath="$PROJECT_DIR$/website.iml" />
+    </modules>
+  </component>
+</project>

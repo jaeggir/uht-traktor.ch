@@ -1,0 +1,30 @@
+<ruleset comparisonMethod="maven" xmlns="http://mojo.codehaus.org/versions-maven-plugin/rule/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://mojo.codehaus.org/versions-maven-plugin/rule/2.0.0 http://mojo.codehaus.org/versions-maven-plugin/xsd/rule-2.0.0.xsd">
+
+    <ignoreVersions>
+
+        <!-- Generally ignore alpha/beta/candidate/milestone releases -->
+        <ignoreVersion type="regex">.*(\.|-)(alpha|b|beta|Beta|CR|RC|rc|M)(-)?\d*(\.|-)?\d*</ignoreVersion>
+
+        <!-- Generally ignore date- and time-stamps -->
+        <ignoreVersion type="regex">\d{8}(\.\d{6})?</ignoreVersion>
+
+    </ignoreVersions>
+
+    <rules>
+		
+        <rule groupId="org.hibernate" artifactId="hibernate-validator" comparisonMethod="maven">
+            <ignoreVersions>
+                <ignoreVersion type="regex">5.*</ignoreVersion>
+            </ignoreVersions>
+        </rule>
+
+        <rule groupId="javax.validation" artifactId="validation-api" comparisonMethod="maven">
+            <ignoreVersions>
+                <ignoreVersion type="regex">1.1.*</ignoreVersion>
+            </ignoreVersions>
+        </rule>
+
+    </rules>
+
+</ruleset>

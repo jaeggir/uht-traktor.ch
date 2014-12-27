@@ -1,0 +1,107 @@
+
+<!doctype html>
+<!--[if IE 8]>         <html lang="de" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="de" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <title>UHT Traktor</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <!-- build:css styles/app.css -->
+    <link rel="stylesheet" href="styles/app.css">
+    <!-- endbuild -->
+
+    <!-- build:js app/ieshims.js -->
+    <!--[if lt IE 9]>
+    <script src="bower_components/html5shiv/dist/html5shiv.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/respond/src/respond.js"></script>
+    <![endif]-->
+    <!-- endbuild -->
+</head>
+
+<body class="application">
+
+<!-- Black top navigation bar -->
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="CoreController">
+    <div class="container-fluid no-padding">
+
+        <div class="navbar-header avrios-logo-header">
+            <button type="button" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed"
+                    class="btn btn-navbar navbar-toggle">
+
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="#">
+                <img src="images/uht-header-logo.png" class="header-logo">
+            </a>
+        </div>
+
+        <!-- Main menu bar -->
+        <div class="navbar-collapse collapse" collapse="navCollapsed">
+
+            <!-- Left menu -->
+            <ul class="nav navbar-nav navbar-left">
+                <li ui-sref-active="active"><a ui-sref="fuel">News</a></li>
+            </ul>
+
+            <!-- Right menu -->
+            <ul class="nav navbar-nav navbar-right padded-navbar-right" ng-cloak>
+                <li class="dropdown" dropdown>
+                    <a role="button" class="dropdown-toggle" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                        Menu <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="identity"><span class="glyphicon glyphicon-user"></span> Login</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="sidebar">
+    <div ui-view="submenu"></div>
+</div>
+
+<div class="main-content">
+    <div class="container-fluid" ui-view="content"></div>
+</div>
+
+<!-- build:js app/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/angular-deferred-bootstrap/angular-deferred-bootstrap.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js app/app.js -->
+<!-- Bootstrapping -->
+<script src="app/uht.module.js"></script>
+
+<!-- API (always load .module.js first!) -->
+<script src="app/api/api.module.js"></script>
+
+<!-- core module (always load .module.js first!) -->
+<script src="app/core/core.module.js"></script>
+<script src="app/core/core.config.js"></script>
+<script src="app/core/core.controller.js"></script>
+<!-- endbuild -->
+
+</body>
+</html>
+
