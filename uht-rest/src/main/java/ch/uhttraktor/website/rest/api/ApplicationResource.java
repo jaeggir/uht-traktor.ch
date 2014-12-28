@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,15 +29,17 @@ public class ApplicationResource implements EnvironmentAware {
     }
 
     /**
-     * GET  /application -> check if the user is authenticated, and return its login.
+     * GET  /application -> return static application details
      */
     @RequestMapping(value = "/application", method = RequestMethod.GET, produces = "application/json")
-    public Map<String, String> getApplicationDetails() {
+    public Map<String, String> getApplicationDetails(HttpServletRequest request) {
 
         Map<String, String> result = new HashMap<>();
+
+        // environment (dev or prod)
         result.put("releaseStage", env.acceptsProfiles(STAGE_PROD) ? STAGE_PROD : STAGE_DEV);
 
-        // Load app version
+        // app version
         String appVersion = getClass().getPackage().getImplementationVersion();
         if (appVersion == null) {
             Properties prop = new Properties();
