@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" >
+
+    <Appenders>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{2} - %msg%n"/>
+        </Console>
+
+    </Appenders>
+
+    <Loggers>
+
+        <!-- Application logger -->
+
+        <!-- 3rd-party Loggers -->
+
+        <Logger name="org.apache" level="error" />
+        <Logger name="org.hibernate" level="error" />
+        <Logger name="org.springframework" level="error" />
+        <Logger name="org.springframework.web" level="debug" />
+        <Logger name="org.springframework.orm" level="error" />
+        <Logger name="org.springframework.beans.factory.support.DefaultListableBeanFactory" level="error" />
+        <Logger name="org.springframework.jdbc.datasource.SimpleDriverDataSource" level="error" />
+
+        <!-- Debug/optimize SQL Queries -->
+        <!-- set org.hibernate.SQL to debug and org.hibernate.type to trace -->
+        <Logger name="org.hibernate.SQL" level="error" />
+        <Logger name="org.hibernate.type" level="error" />
+
+        <Root level="debug">
+            <AppenderRef ref="Console"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>
