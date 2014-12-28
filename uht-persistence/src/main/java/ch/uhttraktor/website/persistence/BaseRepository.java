@@ -1,8 +1,6 @@
 package ch.uhttraktor.website.persistence;
 
 import ch.uhttraktor.website.domain.BaseEntity;
-import org.hibernate.Session;
-import org.hibernate.stat.Statistics;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,14 +32,6 @@ public class BaseRepository<Entity extends BaseEntity> {
         }
         ParameterizedType genericSuperclass = (ParameterizedType) klass.getGenericSuperclass();
         this.clazz = (Class<Entity>) genericSuperclass.getActualTypeArguments()[0];
-    }
-
-    public void enableStatistics() {
-        em.unwrap(Session.class).getSessionFactory().getStatistics().setStatisticsEnabled(true);
-    }
-
-    protected Statistics getStatistics() {
-        return em.unwrap(Session.class).getSessionFactory().getStatistics();
     }
 
     // INSERT / UPDATE
@@ -154,24 +144,6 @@ public class BaseRepository<Entity extends BaseEntity> {
         } else {
             throw new IllegalStateException("Result count was " + result.size() + ", but 1 or 0 expected.");
         }
-    }
-
-    // FLUSH the beast
-
-    @Transactional(propagation = Propagation.MANDATORY)
-    public void flush() {
-        em.flush();
-    }
-
-    /**
-    * Clear the persistence context, causing all managed
-    * entities to become detached. Changes made to entities that
-    * have not been flushed to the database will not be
-    * persisted.
-    */
-    @Transactional(propagation = Propagation.MANDATORY)
-    public void clear() {
-        em.clear();
     }
 
 }

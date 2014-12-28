@@ -88,11 +88,8 @@ public class AuthService {
         token.setTokenDate(Instant.now());
         token.setIpAddress(request.getRemoteAddr());
         token.setUserAgent(request.getHeader("User-Agent"));
-        try {
-            persistentTokenRepository.save(token);
-        } catch (DataAccessException e) {
-            log.error("Failed to save persistent token", e);
-        }
+        persistentTokenRepository.save(token);
+
         return token;
     }
 
