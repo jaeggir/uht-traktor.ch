@@ -3,8 +3,9 @@
 
     var core = angular.module('uht.core');
 
-    core.config(function ($logProvider, APP_CONFIG) {
+    core.config(function ($logProvider, $compileProvider, APP_CONFIG) {
 
+        $compileProvider.debugInfoEnabled(APP_CONFIG.releaseStage !== 'prod');
         $logProvider.debugEnabled(APP_CONFIG.releaseStage !== 'prod');
 
     });
