@@ -37,6 +37,13 @@
             <artifactId>spring-security-config</artifactId>
         </dependency>
 
+        <!-- File upload -->
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+
         <!-- Servlet 3.x support -->
 
         <dependency>

@@ -1,9 +1,7 @@
 package ch.uhttraktor.website.rest.config;
 
-import ch.uhttraktor.website.AppConstants;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.flywaydb.core.Flyway;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,57 +28,6 @@ public class DatabaseConfiguration implements EnvironmentAware {
 
     private Environment env;
 
-    @Value("${datasource.className}")
-    private String datasourceClassName;
-
-    @Value("${datasource.url}")
-    private String datasourceUrl;
-
-    @Value("${datasource.username}")
-    private String datasourceUsername;
-
-    @Value("${datasource.password}")
-    private String datasourcePassword;
-
-    @Value("${datasource.databaseName}")
-    private String datasourceDatabaseName;
-
-    @Value("${flyway.username}")
-    private String flywayUsername;
-
-    @Value("${flyway.password}")
-    private String flywayPassword;
-
-    @Value("${flyway.validateOnMigrate}")
-    private String validateOnMigrate;
-
-    @Value("${jpa.database-platform}")
-    private String jpaDatabasePlatform;
-
-    @Value("${jpa.show_sql}")
-    private String jpaShowSql;
-
-    @Value("${jpa.format_sql}")
-    private String jpaFormatSql;
-
-    @Value("${jpa.database}")
-    private String jpaDatabase;
-
-    @Value("${hibernate.order_inserts}")
-    private String hibernateOrderInserts;
-
-    @Value("${hibernate.order_updates}")
-    private String hibernateOrderUpdates;
-
-    @Value("${hibernate.jdbc.batch_size}")
-    private String hibernateBatchSize;
-
-    @Value("${hibernate.use_sql_comments}")
-    private String hibernateUseSqlComments;
-
-    @Value("${hibernate.hbm2ddl.auto}")
-    private String hibernateHbm2ddlAuto;
-
     @Override
     public void setEnvironment(Environment environment) {
         this.env = environment;
@@ -89,11 +36,11 @@ public class DatabaseConfiguration implements EnvironmentAware {
     @Bean
     public DataSource dataSource() {
         BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setDriverClassName(datasourceClassName);
-        basicDataSource.setUrl(datasourceUrl);
-        basicDataSource.setUsername(datasourceUsername);
-        basicDataSource.setPassword(datasourcePassword);
-        basicDataSource.setDefaultCatalog(datasourceDatabaseName);
+        basicDataSource.setDriverClassName(env.getProperty("datasource.className"));
+        basicDataSource.setUrl(env.getProperty("datasource.url"));
+        basicDataSource.setUsername(env.getProperty("datasource.username"));
+        basicDataSource.setPassword(env.getProperty("datasource.password"));
+        basicDataSource.setDefaultCatalog(env.getProperty("datasource.databaseName"));
         basicDataSource.setInitialSize(5);
         basicDataSource.setMaxActive(50);
         basicDataSource.setTestOnBorrow(true);
@@ -103,11 +50,11 @@ public class DatabaseConfiguration implements EnvironmentAware {
 
     public DataSource createFlywayDataSource() {
         BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setDriverClassName(datasourceClassName);
-        basicDataSource.setUrl(datasourceUrl);
-        basicDataSource.setUsername(flywayUsername);
-        basicDataSource.setPassword(flywayPassword);
-        basicDataSource.setDefaultCatalog(datasourceDatabaseName);
+        basicDataSource.setDriverClassName(env.getProperty("datasource.className"));
+        basicDataSource.setUrl(env.getProperty("datasource.url"));
+        basicDataSource.setUsername(env.getProperty("flyway.username"));
+        basicDataSource.setPassword(env.getProperty("flyway.password"));
+        basicDataSource.setDefaultCatalog(env.getProperty("flyway.databaseName"));
         basicDataSource.setInitialSize(1);
         basicDataSource.setTestOnBorrow(true);
         basicDataSource.setValidationQuery("SELECT 1");
@@ -119,14 +66,10 @@ public class DatabaseConfiguration implements EnvironmentAware {
         Flyway flyway = new Flyway();
         flyway.setDataSource(createFlywayDataSource());
         flyway.setBaselineOnMigrate(true);
-        flyway.setValidateOnMigrate(getBoolean(validateOnMigrate));
+        flyway.setValidateOnMigrate(getBoolean(env.getProperty("flyway.validateOnMigrate")));
 
         flyway.setOutOfOrder(true);
-        if (env.acceptsProfiles(AppConstants.STAGE_DEV)) {
-            flyway.setLocations("classpath:db/migration", "db/testdata");
-        } else {
-            flyway.setLocations("classpath:db/migration");
-        }
+        flyway.setLocations("classpath:db/migration");
 
         return flyway;
     }
@@ -151,22 +94,22 @@ public class DatabaseConfiguration implements EnvironmentAware {
 
     public JpaVendorAdapter jpaAdapter() {
         HibernateJpaVendorAdapter jpaAdapter = new HibernateJpaVendorAdapter();
-        jpaAdapter.setDatabasePlatform(jpaDatabasePlatform);
-        jpaAdapter.setShowSql(Boolean.parseBoolean(jpaShowSql));
-        jpaAdapter.setDatabase(Database.valueOf(jpaDatabase));
+        jpaAdapter.setDatabasePlatform(env.getProperty("jpa.database-platform"));
+        jpaAdapter.setShowSql(Boolean.parseBoolean(env.getProperty("jpa.show_sql")));
+        jpaAdapter.setDatabase(Database.valueOf(env.getProperty("jpa.database")));
         return jpaAdapter;
     }
 
     private Properties jpaProperties() {
         return new Properties() {
             {
-                setProperty("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
-                setProperty("hibernate.show_sql", jpaShowSql);
-                setProperty("hibernate.format_sql", jpaFormatSql);
-                setProperty("hibernate.order_inserts", hibernateOrderInserts);
-                setProperty("hibernate.jdbc.batch_size", hibernateBatchSize);
-                setProperty("hibernate.hibernate.order_updates", hibernateOrderUpdates);
-                setProperty("hibernate.use_sql_comments", hibernateUseSqlComments);
+                setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+                setProperty("hibernate.show_sql", env.getProperty("jpa.show_sql"));
+                setProperty("hibernate.format_sql", env.getProperty("jpa.format_sql"));
+                setProperty("hibernate.order_inserts", env.getProperty("hibernate.order_inserts"));
+                setProperty("hibernate.jdbc.batch_size", env.getProperty("hibernate.jdbc.batch_size"));
+                setProperty("hibernate.hibernate.order_updates", env.getProperty("hibernate.order_updates"));
+                setProperty("hibernate.use_sql_comments", env.getProperty("hibernate.use_sql_comments"));
                 setProperty("hibernate.generate_statistics", "false");
             }
         };
