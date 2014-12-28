@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +31,7 @@ public class ApplicationResource implements EnvironmentAware {
      * GET  /application -> return static application details
      */
     @RequestMapping(value = "/application", method = RequestMethod.GET, produces = "application/json")
-    public Map<String, String> getApplicationDetails(HttpServletRequest request) {
+    public Map<String, String> getApplicationDetails() {
 
         Map<String, String> result = new HashMap<>();
 
