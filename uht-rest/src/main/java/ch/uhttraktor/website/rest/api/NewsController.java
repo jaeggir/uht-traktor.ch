@@ -1,8 +1,8 @@
 package ch.uhttraktor.website.rest.api;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class NewsController {
 
 
