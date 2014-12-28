@@ -24,7 +24,7 @@
 
         /* common modules */
         'uht.core',
-        'uht.api',
+        'uht.api'
 
         /* feature modules */
 

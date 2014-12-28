@@ -7,9 +7,6 @@
         'ngResource',
 
         /* AngularUI modules */
-        'ui.bootstrap',
-        'ui.bootstrap.showErrors',
-        'ui.router',
 
         /* common, reusable blocks */
         'uht.api'
