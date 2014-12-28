@@ -20,6 +20,8 @@
     </scm>
 
     <modules>
+        <module>uht-domain</module>
+        <module>uht-persistence</module>
         <module>uht-rest</module>
         <module>uht-web</module>
         <module>uht-web-package</module>
@@ -85,6 +87,18 @@
         <dependencies>
 
             <!-- maven sub modules -->
+
+            <dependency>
+                <groupId>ch.uhttraktor</groupId>
+                <artifactId>uht-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.uhttraktor</groupId>
+                <artifactId>uht-persistence</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>ch.uhttraktor</groupId>

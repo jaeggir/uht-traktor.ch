@@ -22,12 +22,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="uht-domain" />
+        <module name="uht-persistence" />
         <module name="uht-rest" />
         <module name="uht-web" />
         <module name="uht-web-package" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="uht-domain" target="1.8" />
+      <module name="uht-persistence" target="1.8" />
       <module name="uht-rest" target="1.8" />
       <module name="uht-web" target="1.8" />
       <module name="uht-web-package" target="1.8" />

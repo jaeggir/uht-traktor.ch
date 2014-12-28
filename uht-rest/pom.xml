@@ -16,9 +16,21 @@
 
     <dependencies>
 
-        <!-- module dependency -->
+        <!-- UHT dependencies -->
+
+        <dependency>
+            <groupId>ch.uhttraktor</groupId>
+            <artifactId>uht-persistence</artifactId>
+        </dependency>
+
+        <!-- module dependencies -->
 
         <!-- Spring -->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
 
         <!-- Servlet 3.x support -->
 
