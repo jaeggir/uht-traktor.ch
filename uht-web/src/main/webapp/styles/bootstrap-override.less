@@ -1,0 +1,62 @@
+
+// Overwrites for Bootstrap navs
+.nav-tabs {
+  background-color: @uht-gray-superlight;
+  padding-left: @uht-content-padding;
+}
+
+.nav-tabs > li > a {
+  border-radius: 0px;
+}
+
+.nav-tabs > li > a:hover {
+  background-color: @body-bg;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li > a:hover {
+  color: @uht-black;
+}
+
+// Overwrites for Bootstrap scaffold
+
+.container-fluid {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+// Overwrites for Bootstrap navbar
+
+.navbar {
+  max-height: @navbar-height;
+}
+
+.navbar-header {
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: @navbar-height;
+  border-right: 1px solid @uht-navbar-header-border-color;
+}
+
+.navbar-left {
+  margin-left: 15px;
+}
+
+.navbar-nav > .active > a {
+  border-bottom: 4px solid darken(@navbar-inverse-bg, 8%);
+  padding-bottom: 7px;
+}
+
+// Overwrites for Bootstrap modals
+
+.modal-content {
+  border-radius: 0px;
+}
+
+// Bootstrap 3.3.1 drops this due to some incompatability with scrollbars when the modal is scrollable
+// Works for us for now though...
+.modal-backdrop {
+  position: fixed;
+  bottom: 0;
+}

@@ -1,0 +1,118 @@
+/*
+* Variable definitions for the UHT stylesheet
+* Golden rule: If you use a number on more than one page
+* define it here.
+*/
+
+//================
+// COLORS
+//================
+
+//-------------------------
+// UHT color definitions
+//-------------------------
+
+// Brand colors
+@uht-brand-main-light:         lighten(@uht-brand-main, 10%);
+@uht-brand-main:               rgb(46, 146, 201);
+@uht-brand-main-dark:          darken(@uht-brand-main, 10%);
+
+@uht-brand-success:            #5cb85c;
+@uht-brand-warning:            #f0ad4e;
+@uht-brand-info:               #5bc0de;
+
+// Grayscale colors
+@uht-black:                    rgb(41, 41, 41);
+
+@uht-gray-superlight:          lighten(@uht-black, 80%);
+@uht-gray-lighter:             lighten(@uht-black, 73.5%);
+@uht-gray-light:               lighten(@uht-black, 46.7%);
+@uht-gray:                     lighten(@uht-black, 33.5%);
+@uht-gray-dark:                lighten(@uht-black, 20%);
+@uht-gray-darker:              lighten(@uht-black, 13.5%);
+
+@uht-inverse-light:            rgb(220, 220, 220);
+
+// Main content
+@uht-main-content-bg:          rgb(255, 255, 255);
+
+// Navbar
+@uht-navbar-header-border-color: darken(@uht-brand-main, 5%);
+
+
+//-------------------------
+// Bootstrap Color definitions
+//-------------------------
+
+// Brand colors
+@brand-main:                  @uht-brand-main;
+@brand-success:               @uht-brand-success;
+@brand-warning:               @uht-brand-warning;
+@brand-info:                  @uht-brand-info;
+
+// Grayscale colors
+@gray-lighter:                @uht-gray-lighter;
+@gray-light:                  @uht-gray-light;
+@gray:                        @uht-gray;
+@gray-dark:                   @uht-gray-dark;
+@gray-darker:                 @uht-gray-darker;
+
+// Body
+@body-bg:                     @uht-main-content-bg;
+
+// Nav
+@nav-link-hover-bg:           @uht-sidebar-active-bg;
+
+// Navbar
+@navbar-inverse-bg:           @uht-brand-main;
+@navbar-inverse-link-active-bg: @uht-brand-main-light;
+@navbar-inverse-link-color:   @uht-inverse-light;
+@navbar-inverse-link-hover-color: #fff;
+
+// Buttons
+@btn-primary-bg:              @uht-brand-main;
+
+
+
+//================
+// FONTS
+//================
+
+//-------------------------
+// UHT font definitions
+//-------------------------
+@uht-font-family-sans-serif:   'Open Sans', sans-serif;
+@uht-font-family-serif:        'Open Sans', serif;
+
+//-------------------------
+// Bootstrap font definitions
+//-------------------------
+@font-family-sans-serif:      @uht-font-family-sans-serif;
+@font-family-serif:           @uht-font-family-serif;
+
+//-------------------------
+// Bootstrap Iconography
+//-------------------------
+@icon-font-path:              "../fonts/";
+
+
+
+//================
+// SPACING
+//================
+
+//------------------------
+// UHT spacing
+//------------------------
+@uht-content-padding:         15px; // In pixel, 2* this is grid gutter width
+@uht-navbar-height:           45px;
+
+//------------------------
+// Bootstrap spacing
+//------------------------
+
+// Grid
+@grid-gutter-width:           2 * @uht-content-padding;
+
+// Navbar
+@navbar-height:               @uht-navbar-height;

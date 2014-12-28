@@ -1,0 +1,104 @@
+// styles for all applications
+
+/* Move down content in applicatio because we have a fixed navbar that is @navbar-height tall */
+body.application {
+  padding-top: @navbar-height;
+}
+
+/*
+  Allow angular.js to be loaded in body, hiding cloaked elements until
+  templates compile.  The !important is important given that there may be
+  other selectors that are more specific or come later and might alter display.
+ */
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Navigation
+ */
+.uht-logo-header {
+  width: @uht-sidebar-width;
+}
+
+.padded-navbar-right {
+  padding-right: @uht-content-padding;
+}
+
+/*
+ * Main content
+ */
+.main-content {
+  position: absolute;
+  top: 45px;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+@media (min-width: @screen-sm) {
+  .main-content {
+    left: @uht-sidebar-width;
+    width: 100 - @uht-sidebar-width;
+  }
+}
+
+/*
+ * Header
+ */
+
+img.header-logo {
+  vertical-align: middle;
+}
+
+/*
+ * Page skelleton
+ */
+
+.header,
+.tab-header {
+  padding-top: @uht-content-padding;
+  padding-left: 2 * @uht-content-padding;
+  padding-right: 2* @uht-content-padding;
+}
+
+.tab-header {
+  background-color: @uht-gray-superlight;
+}
+
+/*
+ * Text sizes
+ */
+
+p.larger {
+  font-size: 16px;
+}
+
+//==============
+// Mixins
+//==============
+
+// Background mixin
+// Mix this class in if you want the background of the element to stretch the entire width of the content area
+.main-content-padding {
+  padding-left: 2 * @uht-content-padding;
+  padding-right: 2* @uht-content-padding;
+}
+
+.modal-content-padding {
+  padding-left: @uht-content-padding;
+  padding-right: @uht-content-padding;
+}
+
+// No padding. Does what it says on the tin
+.no-padding {
+  padding: 0px;
+}
