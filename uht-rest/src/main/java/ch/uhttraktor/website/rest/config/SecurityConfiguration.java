@@ -97,13 +97,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .disable()
             .authorizeRequests()
 
-                .antMatchers("/admin/**").hasAuthority(SecurityUtils.ADMIN)
                 .antMatchers("/api/admin/**").hasAuthority(SecurityUtils.ADMIN)
 
-                .antMatchers("/secure/**").authenticated()
                 .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/application").permitAll()
-                .antMatchers("/api/websocket").authenticated()
                 .antMatchers("/api/**").authenticated();
     }
 
