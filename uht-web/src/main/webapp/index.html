@@ -30,49 +30,73 @@
 
 <body class="application">
 
-<!-- Black top navigation bar -->
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="CoreController">
-    <div class="container-fluid no-padding">
-
-        <div class="navbar-header uht-logo-header">
-            <button type="button" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed"
-                    class="btn btn-navbar navbar-toggle">
-
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="CoreController">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#uht-nav">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="#">
-                <!--img src="images/uht-header-logo.png" class="header-logo"-->
-            </a>
+            <a class="navbar-brand" href="#">UHT Traktor</a>
         </div>
 
-        <!-- Main menu bar -->
-        <div class="navbar-collapse collapse" collapse="navCollapsed">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="uht-nav">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#/news">News</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Teams <span class="caret"></span></a>
 
-            <!-- Left menu -->
-            <ul class="nav navbar-nav navbar-left">
-                <li><a href="#/news">News</a></li>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#/teams/traktor-1">Traktor 1</a></li>
+                        <li><a href="#/teams/traktor-2">Traktor 2</a></li>
+                        <li><a href="#/teams/traktor-damen">Traktor Damen</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#/teams/traktor-boys">Traktor Boys</a></li>
+                        <li><a href="#/teams/traktor-girls">Traktor Girls</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Verein <span class="caret"></span></a>
+
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#/club/calendar">Jahresprogramm</a></li>
+                        <li><a href="#/club/officials">Funktionäre</a></li>
+                        <li><a href="#/club/documents">Dokumente</a></li>
+                        <li><a href="#/teams/facts-and-figures">Zahlen & Fakten</a></li>
+                        <li><a href="#/teams/awards">Auszeichnungen</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Anlässe <span class="caret"></span></a>
+
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#/events/doerferturnier">Dörferturnier</a></li>
+                        <li><a href="http://www.funandsports.ch">Fun & Sports</a></li>
+                    </ul>
+                </li>
             </ul>
-
-            <!-- Right menu -->
             <ul class="nav navbar-nav navbar-right padded-navbar-right" ng-cloak>
-                <li class="dropdown" dropdown ng-if="isAuthenticated()">
-                    <a role="button" class="dropdown-toggle" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
-                        {{user.login}} <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
+                <li class="dropdown" ng-if="isAuthenticated()">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        {{user.login}} <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
                         <li><a href="#/identity/logout"><span class="glyphicon glyphicon-user"></span> Logout</a></li>
                     </ul>
                 </li>
                 <li ng-if="!isAuthenticated()">
-                    <a href="#/identity/login"><span class="glyphicon glyphicon-user"></span> Login</a></a>
+                    <a href="#/identity/login"><span class="glyphicon glyphicon-user"></span> Anmelden</a></a>
                 </li>
             </ul>
         </div>
     </div>
-</div>
+</nav>
 
 <div class="main-content">
     <div class="container-fluid" ui-view="content"></div>
@@ -80,6 +104,8 @@
 
 <!-- build:js app/vendor.js -->
 <!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-resource/angular-resource.js"></script>
 <script src="bower_components/angular-deferred-bootstrap/angular-deferred-bootstrap.js"></script>
