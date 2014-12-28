@@ -58,13 +58,16 @@
 
             <!-- Right menu -->
             <ul class="nav navbar-nav navbar-right padded-navbar-right" ng-cloak>
-                <li class="dropdown" dropdown>
+                <li class="dropdown" dropdown ng-if="isAuthenticated()">
                     <a role="button" class="dropdown-toggle" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
-                        Menu <span class="caret"></span>
+                        {{user.login}} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#/identity/login"><span class="glyphicon glyphicon-user"></span> Login</a></li>
+                        <li><a href="#/identity/logout"><span class="glyphicon glyphicon-user"></span> Logout</a></li>
                     </ul>
+                </li>
+                <li ng-if="!isAuthenticated()">
+                    <a href="#/identity/login"><span class="glyphicon glyphicon-user"></span> Login</a></a>
                 </li>
             </ul>
         </div>
@@ -89,6 +92,7 @@
 
 <!-- API (always load .module.js first!) -->
 <script src="app/api/api.module.js"></script>
+<script src="app/api/identity.js"></script>
 
 <!-- core module (always load .module.js first!) -->
 <script src="app/core/core.module.js"></script>

@@ -81,7 +81,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .key(rememberMeKey)
                 .and()
             .formLogin()
-                .loginProcessingUrl("/api/authentication")
+                .loginProcessingUrl("/api/identity/login")
                 .successHandler(new AjaxAuthenticationSuccessHandler())
                 .failureHandler(new AjaxAuthenticationFailureHandler())
                 .usernameParameter("j_username")
@@ -89,17 +89,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
             .logout()
-                .logoutUrl("/api/logout")
+                .logoutUrl("/api/identity/logout")
                 .deleteCookies("JSESSIONID")
                 .permitAll()
                 .and()
             .csrf()
                 .disable()
             .authorizeRequests()
-
-                .antMatchers("/api/admin/**").hasAuthority(SecurityUtils.ADMIN)
-
-                .antMatchers("/api/authenticate").permitAll()
+                .antMatchers("/api/identity/user").permitAll()
                 .antMatchers("/api/application").permitAll()
                 .antMatchers("/api/**").authenticated();
     }
