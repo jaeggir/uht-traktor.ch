@@ -1,4 +1,3 @@
-uht-traktor.ch
-==============
+**www.uht-traktor.ch**
 
-Website uht-traktor.ch
+Check out the [Wiki](https://github.com/jaeggir/uht-traktor.ch/wiki).
