@@ -52,6 +52,21 @@ public abstract class BaseService<T extends BaseEntity> {
         }
     }
 
+    @Transactional
+    public T createOrUpdate(HttpServletResponse response, T entity) {
+        if (entity.getUuid() != null) {
+            // existing entity - check if it really exists and set an error status if not
+            T existingEntity = getRepository().findOne(entity.getUuid());
+            if (existingEntity == null) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                return entity;
+            }
+        }
+
+        // persist or merge entity
+        return getRepository().save(entity);
+    }
+
     protected UUID uuidFromString(String uuid) {
         try {
             return UUID.fromString(uuid);
@@ -60,6 +75,4 @@ public abstract class BaseService<T extends BaseEntity> {
             return null;
         }
     }
-
-
 }

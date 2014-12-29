@@ -28,7 +28,7 @@ public class NewsResource {
      * GET  /news -> get news entries based on filter parameters (or all if not given).
      */
     @RequestMapping(value = "/news", method = RequestMethod.GET, produces = "application/json")
-    public Page<News> getNewsEntries(@RequestParam(value = "pageSize", required = false) Integer pageSize,
+    public Page<News> getEntries(@RequestParam(value = "pageSize", required = false) Integer pageSize,
                                      @RequestParam(value = "page", required = false) Integer page) {
 
         return newsService.find(pageSize, page);
@@ -38,8 +38,16 @@ public class NewsResource {
      * DELETE  /news/{uuid} -> delete news entry specified by uuid.
      */
     @RequestMapping(value = "/news/{uuid}", method = RequestMethod.DELETE)
-    public void deleteNewsEntry(HttpServletResponse response, @PathVariable(value = "uuid") String uuid) {
+    public void deleteEntry(HttpServletResponse response, @PathVariable(value = "uuid") String uuid) {
         newsService.delete(response, uuid);
+    }
+
+    /**
+     * POST  /news -> create or update news entry
+     */
+    @RequestMapping(value = "/news/{uuid}", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
+    public News createOrUpdateEntry(HttpServletResponse response, @RequestBody News news) {
+        return newsService.createOrUpdate(response, news);
     }
 
 }
