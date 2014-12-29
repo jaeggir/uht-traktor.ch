@@ -1,6 +1,8 @@
 package ch.uhttraktor.website.persistence;
 
 import ch.uhttraktor.website.domain.BaseEntity;
+import ch.uhttraktor.website.persistence.util.Page;
+import ch.uhttraktor.website.persistence.util.Paginate;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,6 +89,12 @@ public class BaseRepository<Entity extends BaseEntity> {
 
             return query.getResultList();
         }
+    }
+
+    @Transactional(propagation = Propagation.MANDATORY, readOnly = true)
+    public Page<Entity> find(int pageSize, int page) {
+        List<Entity> result = findAll();
+        return Paginate.paginate(result, pageSize, page);
     }
 
     @Transactional(propagation = Propagation.MANDATORY, readOnly = true)
