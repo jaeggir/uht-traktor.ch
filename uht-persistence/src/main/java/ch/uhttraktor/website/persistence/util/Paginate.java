@@ -4,20 +4,20 @@ import java.util.List;
 
 public class Paginate {
 
-    public static <T> Page<T> paginate(List<T> list, int pagesize, int page) {
+    public static <T> Page<T> paginate(List<T> list, Integer pageSize, Integer page) {
         Page<T> result = new Page();
 
         if (list.size() > 0) {
             // Ensure page is in sane range
-            if ((page-1) * pagesize > list.size()) {
-                page = new Double(Math.floor(list.size() / pagesize)).intValue();
+            if ((page-1) * pageSize > list.size()) {
+                page = new Double(Math.floor(list.size() / pageSize)).intValue();
             } else if (page < 1) {
                 page = 1;
             }
 
             // Compute indexes to sub-select
-            int fromIndex = (page - 1) * pagesize;
-            int toIndex = page * pagesize;
+            int fromIndex = (page - 1) * pageSize;
+            int toIndex = page * pageSize;
             if (toIndex > list.size()) {
                 toIndex = list.size();
             }

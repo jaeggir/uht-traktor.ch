@@ -92,9 +92,14 @@ public class BaseRepository<Entity extends BaseEntity> {
     }
 
     @Transactional(propagation = Propagation.MANDATORY, readOnly = true)
-    public Page<Entity> find(int pageSize, int page) {
+    public Page<Entity> find(Integer pageSize, Integer page) {
         List<Entity> result = findAll();
-        return Paginate.paginate(result, pageSize, page);
+        if (pageSize == null || page == null) {
+            // if one of them is not set, lets return the entire result-set
+            return Paginate.paginate(result, result.size(), 1);
+        } else {
+            return Paginate.paginate(result, pageSize, page);
+        }
     }
 
     @Transactional(propagation = Propagation.MANDATORY, readOnly = true)
