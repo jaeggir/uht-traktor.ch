@@ -96,9 +96,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .csrf()
                 .disable()
             .authorizeRequests()
-                .antMatchers("/api/identity/user").permitAll()
-                .antMatchers("/api/application").permitAll()
-                .antMatchers("/api/**").authenticated();
+                .antMatchers("/api/**").permitAll();
     }
 
     @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)

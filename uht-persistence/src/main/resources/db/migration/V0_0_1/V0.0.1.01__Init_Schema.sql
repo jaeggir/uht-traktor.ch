@@ -30,16 +30,34 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: t_news; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
+--
+
+CREATE TABLE t_news (
+    uuid character varying(255) NOT NULL,
+    datecreated timestamp without time zone DEFAULT now(),
+    lastmodified timestamp without time zone,
+    content text NOT NULL,
+    publishdate timestamp without time zone,
+    title character varying(255) NOT NULL,
+    visible boolean NOT NULL,
+    user_uuid character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.t_news OWNER TO uht;
+
+--
 -- Name: t_persistent_token; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
 --
 
 CREATE TABLE t_persistent_token (
     uuid character varying(255) NOT NULL,
     datecreated timestamp without time zone DEFAULT now(),
-    lastmodified bytea,
+    lastmodified timestamp without time zone,
     ip_address character varying(39),
     series character varying(255) NOT NULL,
-    token_date bytea,
+    token_date timestamp without time zone,
     token_value character varying(255) NOT NULL,
     user_agent character varying(255),
     user_uuid character varying(255)
@@ -55,10 +73,10 @@ ALTER TABLE public.t_persistent_token OWNER TO uht;
 CREATE TABLE t_user (
     uuid character varying(255) NOT NULL,
     datecreated timestamp without time zone DEFAULT now(),
-    lastmodified bytea,
+    lastmodified timestamp without time zone,
     email character varying(255) NOT NULL,
     first_name character varying(255) NOT NULL,
-    lastlogindate bytea,
+    lastlogindate timestamp without time zone,
     last_name character varying(255) NOT NULL,
     login character varying(255) NOT NULL,
     password character varying(255) NOT NULL
@@ -78,6 +96,14 @@ CREATE TABLE t_user_authority (
 
 
 ALTER TABLE public.t_user_authority OWNER TO uht;
+
+--
+-- Name: t_news_pkey; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_news
+    ADD CONSTRAINT t_news_pkey PRIMARY KEY (uuid);
+
 
 --
 -- Name: t_persistent_token_pkey; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
@@ -125,6 +151,14 @@ ALTER TABLE ONLY t_user_authority
 
 ALTER TABLE ONLY t_persistent_token
     ADD CONSTRAINT fk_oa87h8d29m98cqqf4ers9vevb FOREIGN KEY (user_uuid) REFERENCES t_user(uuid);
+
+
+--
+-- Name: fk_rtsqhn334mrptd2fughbb2yks; Type: FK CONSTRAINT; Schema: public; Owner: uht
+--
+
+ALTER TABLE ONLY t_news
+    ADD CONSTRAINT fk_rtsqhn334mrptd2fughbb2yks FOREIGN KEY (user_uuid) REFERENCES t_user(uuid);
 
 
 --
