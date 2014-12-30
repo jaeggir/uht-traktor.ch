@@ -58,7 +58,6 @@ public class MvcInitializer extends AbstractAnnotationConfigDispatcherServletIni
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
 
-
         // set default timezone to UTC - REQUIRED for saving Instant's to DB
         // see InstantPersistenceConverter. For the record: java.sql.Timestamp is a bitch.
         TimeZone.setDefault(TimeZone.getTimeZone("Etc/UTC"));
@@ -98,7 +97,6 @@ public class MvcInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
         filter.setAsyncSupported(true);
     }
-
 
     private boolean isProduction() {
         String profile = System.getProperty("spring.profiles.active");
