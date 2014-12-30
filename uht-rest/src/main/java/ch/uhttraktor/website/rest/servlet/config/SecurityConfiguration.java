@@ -59,13 +59,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         if (env.acceptsProfiles(AppConstants.STAGE_DEV)) {
             auth.inMemoryAuthentication()
-                    .withUser("user").password("user").roles("USER", "NEWS").and()
-                    .withUser("admin").password("admin").roles("NEWS", "USER", "ADMIN");
+                .withUser("user").password("user").roles("USER", "NEWS").and()
+                .withUser("admin").password("admin").roles("NEWS", "USER", "ADMIN");
         } else {
             auth.jdbcAuthentication().passwordEncoder(passwordEncoder())
-                    .usersByUsernameQuery("SELECT login, password, enabled FROM t_user WHERE login = ?")
-                    .authoritiesByUsernameQuery("SELECT u.login, a.authority FROM t_user u, t_user_authority a " +
-                            "WHERE u.uuid = t.user_uuid AND u.login = ?");
+                .usersByUsernameQuery("SELECT login, password, enabled FROM t_user WHERE login = ?")
+                .authoritiesByUsernameQuery("SELECT u.login, a.authority FROM t_user u, t_user_authority a " +
+                    "WHERE u.uuid = t.user_uuid AND u.login = ?");
         }
     }
 
