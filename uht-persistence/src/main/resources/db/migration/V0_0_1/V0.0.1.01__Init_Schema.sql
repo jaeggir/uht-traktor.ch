@@ -48,25 +48,6 @@ CREATE TABLE t_news (
 ALTER TABLE public.t_news OWNER TO uht;
 
 --
--- Name: t_persistent_token; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
---
-
-CREATE TABLE t_persistent_token (
-    uuid character varying(255) NOT NULL,
-    datecreated timestamp without time zone DEFAULT now(),
-    lastmodified timestamp without time zone,
-    ip_address character varying(39),
-    series character varying(255) NOT NULL,
-    token_date timestamp without time zone,
-    token_value character varying(255) NOT NULL,
-    user_agent character varying(255),
-    user_uuid character varying(255)
-);
-
-
-ALTER TABLE public.t_persistent_token OWNER TO uht;
-
---
 -- Name: t_user; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
 --
 
@@ -75,11 +56,12 @@ CREATE TABLE t_user (
     datecreated timestamp without time zone DEFAULT now(),
     lastmodified timestamp without time zone,
     email character varying(255) NOT NULL,
-    first_name character varying(255) NOT NULL,
+    firstname character varying(255) NOT NULL,
     lastlogindate timestamp without time zone,
-    last_name character varying(255) NOT NULL,
+    lastname character varying(255) NOT NULL,
     login character varying(255) NOT NULL,
-    password character varying(255) NOT NULL
+    password character varying(255) NOT NULL,
+    enabled boolean NOT NULL
 );
 
 
@@ -91,7 +73,7 @@ ALTER TABLE public.t_user OWNER TO uht;
 
 CREATE TABLE t_user_authority (
     user_uuid character varying(255) NOT NULL,
-    authorities character varying(255)
+    authority character varying(255)
 );
 
 
@@ -106,27 +88,11 @@ ALTER TABLE ONLY t_news
 
 
 --
--- Name: t_persistent_token_pkey; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
---
-
-ALTER TABLE ONLY t_persistent_token
-    ADD CONSTRAINT t_persistent_token_pkey PRIMARY KEY (uuid);
-
-
---
 -- Name: t_user_pkey; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
 --
 
 ALTER TABLE ONLY t_user
     ADD CONSTRAINT t_user_pkey PRIMARY KEY (uuid);
-
-
---
--- Name: uk_fng8i7cs7yial8ugvywixnktd; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
---
-
-ALTER TABLE ONLY t_persistent_token
-    ADD CONSTRAINT uk_fng8i7cs7yial8ugvywixnktd UNIQUE (series);
 
 
 --
@@ -143,14 +109,6 @@ ALTER TABLE ONLY t_user
 
 ALTER TABLE ONLY t_user_authority
     ADD CONSTRAINT fk_7o2kjeaecihcwod4tv783all5 FOREIGN KEY (user_uuid) REFERENCES t_user(uuid);
-
-
---
--- Name: fk_oa87h8d29m98cqqf4ers9vevb; Type: FK CONSTRAINT; Schema: public; Owner: uht
---
-
-ALTER TABLE ONLY t_persistent_token
-    ADD CONSTRAINT fk_oa87h8d29m98cqqf4ers9vevb FOREIGN KEY (user_uuid) REFERENCES t_user(uuid);
 
 
 --

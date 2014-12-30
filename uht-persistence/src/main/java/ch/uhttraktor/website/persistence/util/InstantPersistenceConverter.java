@@ -1,4 +1,4 @@
-package ch.uhttraktor.website.rest.config;
+package ch.uhttraktor.website.persistence.util;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

@@ -1,22 +1,16 @@
-package ch.uhttraktor.website.rest.config;
+package ch.uhttraktor.website.rest.servlet.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 @Configuration
@@ -28,6 +22,7 @@ import java.util.List;
                 @ComponentScan.Filter(type = FilterType.ANNOTATION, value = RestController.class)
         }
 )
+@PropertySource("classpath:application.properties")
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     /**
@@ -36,6 +31,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
      */
     private static final String JSON_PREFIX = ")]}',\n";
 
+    /* TODO
     @Inject
     private EntityManagerFactory entityManagerFactory;
 
@@ -45,6 +41,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         interceptor.setEntityManagerFactory(entityManagerFactory);
         registry.addWebRequestInterceptor(interceptor);
     }
+    */
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -62,5 +59,13 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         objectMapper.findAndRegisterModules();
         return objectMapper;
+    }
+
+    /*
+     * PropertySourcesPlaceHolderConfigurer Bean only required for @Value("{}") annotations.
+     */
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 }

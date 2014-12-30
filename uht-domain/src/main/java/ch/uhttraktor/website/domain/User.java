@@ -36,13 +36,17 @@ public class User extends BaseEntity {
 
     @NotNull
     @Size(max = 255)
-    @Column(name = "first_name", unique = false, nullable = false, length = 255)
+    @Column(unique = false, nullable = false, length = 255)
     private String firstName;
 
     @NotNull
     @Size(max = 255)
-    @Column(name = "last_name", unique = false, nullable = false, length = 255)
+    @Column(unique = false, nullable = false, length = 255)
     private String lastName;
+
+    @NotNull
+    @Column(unique = false, nullable = false)
+    private Boolean enabled;
 
     @NotNull
     @Email
@@ -53,14 +57,11 @@ public class User extends BaseEntity {
     @Column(unique = false, nullable = true)
     private Instant lastLoginDate;
 
+    @Column(name = "authority")
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Authority.class)
     @CollectionTable(name = "T_USER_AUTHORITY", joinColumns = @JoinColumn(name = "user_uuid"))
     private List<Authority> authorities = new LinkedList<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    private List<PersistentToken> persistentTokens = new LinkedList<>();
 
     @Override
     public String toString() {

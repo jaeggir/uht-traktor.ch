@@ -2,6 +2,7 @@ package ch.uhttraktor.website.rest.api;
 
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,11 +14,13 @@ import java.util.Properties;
 
 import static ch.uhttraktor.website.AppConstants.STAGE_DEV;
 import static ch.uhttraktor.website.AppConstants.STAGE_PROD;
+import static ch.uhttraktor.website.domain.SecurityRole.ANONYMOUS;
 
 /**
  * REST controller for application details (e.g. version).
  */
 @RestController
+@Secured(value = {ANONYMOUS})
 public class ApplicationResource implements EnvironmentAware {
 
     private Environment env;

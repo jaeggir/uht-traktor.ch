@@ -2,6 +2,7 @@ package ch.uhttraktor.website.rest.api;
 
 import ch.uhttraktor.website.domain.User;
 import ch.uhttraktor.website.rest.service.UserService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,7 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import static ch.uhttraktor.website.domain.SecurityRole.ANONYMOUS;
+
 @RestController
+@Secured(value = {ANONYMOUS})
 public class IdentityResource {
 
     @Inject

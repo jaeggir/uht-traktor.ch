@@ -4,21 +4,12 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
-/**
- * Utility class for Spring Security.
- */
 public final class SecurityUtils {
 
-    public static final String ADMIN = "ROLE_ADMIN";
-
-    public static final String USER = "ROLE_USER";
-
     private SecurityUtils() {
+        // utility class - no public constructor needed
     }
 
-    /**
-     * Get the login of the current user.
-     */
     public static String getCurrentLogin() {
         return getCurrentUser().getUsername();
     }
