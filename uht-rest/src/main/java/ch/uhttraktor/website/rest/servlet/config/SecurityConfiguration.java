@@ -1,6 +1,9 @@
 package ch.uhttraktor.website.rest.servlet.config;
 
 import ch.uhttraktor.website.AppConstants;
+import ch.uhttraktor.website.rest.security.AjaxAuthenticationFailureHandler;
+import ch.uhttraktor.website.rest.security.AjaxAuthenticationSuccessHandler;
+import ch.uhttraktor.website.rest.security.Http401UnauthorizedEntryPoint;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -70,26 +73,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .anonymous().authorities(ANONYMOUS).and() // enabled anonymous access, anonymous user has role ROLE_ANONYMOUS
-                /*.exceptionHandling()
+                // enabled anonymous access, anonymous user has role ROLE_ANONYMOUS
+                .anonymous().authorities(ANONYMOUS).and()
+                .exceptionHandling()
                     .authenticationEntryPoint(new Http401UnauthorizedEntryPoint())
-                .and()
+                    .and()
                 .formLogin()
                     .loginProcessingUrl("/api/identity/login")
                     .successHandler(new AjaxAuthenticationSuccessHandler())
                     .failureHandler(new AjaxAuthenticationFailureHandler())
-                .usernameParameter("j_username")
-                    .passwordParameter("j_password")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
                     .permitAll()
                     .and()
                 .logout()
-                .logoutUrl("/api/identity/logout")
+                    .logoutUrl("/api/identity/logout")
                     .deleteCookies("JSESSIONID")
                     .permitAll()
-                    .and()*/
+                    .and()
                 .csrf()
                     .disable()
                 .authorizeRequests()
-                    .antMatchers("/api/**").permitAll();
+                     // deny all access by default - you can override that with @Secured annotations in the controllers
+                    .antMatchers("/api/**").denyAll();
     }
 }
