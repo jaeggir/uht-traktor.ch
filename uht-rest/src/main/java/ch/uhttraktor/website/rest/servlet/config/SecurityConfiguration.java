@@ -55,8 +55,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
         return super.userDetailsServiceBean();
     }
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         if (env.acceptsProfiles(AppConstants.STAGE_DEV)) {
             auth.inMemoryAuthentication()
                 .withUser("user").password("user").roles("USER", "NEWS").and()
