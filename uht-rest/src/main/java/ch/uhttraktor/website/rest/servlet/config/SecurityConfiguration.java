@@ -69,7 +69,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
         }
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -91,7 +90,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                     .deleteCookies("JSESSIONID")
                     .permitAll()
                     .and()
-                .csrf()
+                .csrf() // see: http://docs.spring.io/spring-security/site/docs/3.2.5.RELEASE/reference/htmlsingle/#csrf
                     .disable()
                 .authorizeRequests()
                      // deny all access by default - you can override that with @Secured annotations in the controllers
