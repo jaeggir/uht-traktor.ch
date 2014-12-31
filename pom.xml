@@ -5,7 +5,7 @@
 
     <groupId>ch.uhttraktor</groupId>
     <artifactId>website</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
 
     <name>${project.artifactId}</name>
     <inceptionYear>2015</inceptionYear>
@@ -17,7 +17,8 @@
         <connection>scm:git:ssh://github.com/jaeggir/uht-traktor.ch.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/jaeggir/uht-traktor.ch.git</developerConnection>
         <url>https://github.com/jaeggir/uht-traktor.ch</url>
-    </scm>
+      <tag>uht-traktor-0.0.1</tag>
+  </scm>
 
     <modules>
         <module>uht-domain</module>
