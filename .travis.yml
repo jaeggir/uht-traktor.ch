@@ -4,4 +4,5 @@ jdk:
 before_script:
   - npm install -g grunt-cli
   - npm install -g bower
+  - cd uht-web
   - bower install
