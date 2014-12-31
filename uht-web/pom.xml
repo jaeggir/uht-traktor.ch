@@ -35,7 +35,7 @@
                             <arguments>
                                 <argument>install</argument>
                                 <argument>--loglevel</argument>
-                                <argument>info</argument>
+                                <argument>warn</argument>
                             </arguments>
                         </configuration>
                     </execution>
@@ -51,6 +51,7 @@
                             <executable>${bower-executable}</executable>
                             <arguments>
                                 <argument>install</argument>
+                                <argument>--quiet</argument>
                             </arguments>
                         </configuration>
                     </execution>
