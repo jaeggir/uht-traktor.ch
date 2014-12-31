@@ -5,8 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * This filter is used in production, to put HTTP cache headers with a long (1 month) expiration time.
- * </p>
+ * This filter is used in production, to put HTTP cache headers with a long (1 year) expiration time.
  */
 public class CachingHttpHeadersFilter implements Filter {
 
