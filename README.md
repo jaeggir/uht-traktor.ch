@@ -1,4 +1,4 @@
-**www.uht-traktor.ch**
+# Website UHT Traktor
 
 [![Build Status](https://travis-ci.org/jaeggir/uht-traktor.ch.svg?branch=master)](https://travis-ci.org/jaeggir/uht-traktor.ch)
 
