@@ -66,19 +66,12 @@ public class DatabaseConfiguration implements EnvironmentAware {
         Flyway flyway = new Flyway();
         flyway.setDataSource(createFlywayDataSource());
         flyway.setBaselineOnMigrate(true);
-        flyway.setValidateOnMigrate(getBoolean(env.getProperty("flyway.validateOnMigrate")));
+        flyway.setValidateOnMigrate(Boolean.valueOf(env.getProperty("flyway.validateOnMigrate")));
 
         flyway.setOutOfOrder(true);
         flyway.setLocations("classpath:db/migration");
 
         return flyway;
-    }
-
-    private boolean getBoolean(String property) {
-        if (property == null || !"true".equals(property.trim().toLowerCase())) {
-            return false;
-        }
-        return true;
     }
 
     @Bean
