@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
 Implementation-Title: UHT Traktor
+Implementation-Version: 0.0.1
 Implementation-Vendor-Id: ch.uhttraktor.website
 Implementation-Vendor: UHT Traktor
