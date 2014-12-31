@@ -1,8 +1,8 @@
 language: java
 jdk:
   - oraclejdk8
-before_script:
+before_install:
+  - cd uht-web
   - npm install -g grunt-cli
   - npm install -g bower
-  - cd uht-web
   - bower install
