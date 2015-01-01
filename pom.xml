@@ -425,7 +425,7 @@
             <properties>
                 <grunt-executable>grunt.cmd</grunt-executable>
                 <npm-executable>npm.cmd</npm-executable>
-                 <bower-executable>bower.cmd</bower-executable>
+                <bower-executable>bower.cmd</bower-executable>
             </properties>
         </profile>
     </profiles>
