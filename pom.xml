@@ -10,15 +10,22 @@
     <name>${project.artifactId}</name>
     <inceptionYear>2015</inceptionYear>
     <description>UHT Traktor Website</description>
+    <url>http://www.uht-traktor.ch</url>
 
     <packaging>pom</packaging>
 
     <scm>
-        <connection>scm:git:ssh://github.com/jaeggir/uht-traktor.ch.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/jaeggir/uht-traktor.ch.git</developerConnection>
-        <url>https://github.com/jaeggir/uht-traktor.ch</url>
-      <tag>HEAD</tag>
-  </scm>
+        <connection>scm:git:git@github.com:jaeggir/uht-traktor.ch.git</connection>
+        <developerConnection>scm:git:git@github.com:jaeggir/uht-traktor.ch.git</developerConnection>
+        <url>git@github.com:jaeggir/uht-traktor.ch</url>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
 
     <modules>
         <module>uht-domain</module>
