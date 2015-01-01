@@ -4,27 +4,11 @@
     <ignoreVersions>
 
         <!-- Generally ignore alpha/beta/candidate/milestone releases -->
-        <ignoreVersion type="regex">.*(\.|-)(alpha|b|beta|Beta|CR|RC|rc|M)(-)?\d*(\.|-)?\d*</ignoreVersion>
+        <ignoreVersion type="regex">.*(\.|-)(alpha|Alpha|b|beta|Beta|CR|RC|rc|M)(-)?\d*(\.|-)?\d*</ignoreVersion>
 
         <!-- Generally ignore date- and time-stamps -->
         <ignoreVersion type="regex">\d{8}(\.\d{6})?</ignoreVersion>
 
     </ignoreVersions>
-
-    <rules>
-		
-        <rule groupId="org.hibernate" artifactId="hibernate-validator" comparisonMethod="maven">
-            <ignoreVersions>
-                <ignoreVersion type="regex">5.*</ignoreVersion>
-            </ignoreVersions>
-        </rule>
-
-        <rule groupId="javax.validation" artifactId="validation-api" comparisonMethod="maven">
-            <ignoreVersions>
-                <ignoreVersion type="regex">1.1.*</ignoreVersion>
-            </ignoreVersions>
-        </rule>
-
-    </rules>
 
 </ruleset>
