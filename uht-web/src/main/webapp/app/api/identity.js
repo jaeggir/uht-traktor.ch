@@ -3,7 +3,7 @@
 
     angular
         .module('uht.api')
-        .factory('IdentityService', function ($resource) {
+        .factory('IdentityService', function($resource) {
 
             var user = null;
             $resource('/api/identity/user').get({}, function(data) {
@@ -11,12 +11,23 @@
             });
 
             return {
-                getCurrentUser: function () {
+                getCurrentUser: function() {
                     return user;
                 },
 
-                isAuthenticated: function () {
+                isAuthenticated: function() {
                    return user !== null;
+                },
+
+                login: function(username, password) {
+                    return $resource('/api/identity/login').save({}, {
+                        username: username,
+                        password: password
+                    });
+                },
+
+                logout: function() {
+                    //$resource('/api/identity/logout').;
                 }
             };
 

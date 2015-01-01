@@ -1,9 +1,8 @@
 package ch.uhttraktor.website.rest.servlet.config;
 
 import ch.uhttraktor.website.AppConstants;
-import ch.uhttraktor.website.rest.security.AjaxAuthenticationFailureHandler;
-import ch.uhttraktor.website.rest.security.AjaxAuthenticationSuccessHandler;
 import ch.uhttraktor.website.rest.security.Http401UnauthorizedEntryPoint;
+import ch.uhttraktor.website.rest.security.RestAuthenticationSuccessHandler;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import static ch.uhttraktor.website.domain.SecurityRole.ANONYMOUS;
 
@@ -49,12 +49,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
         return super.authenticationManager();
     }
 
-    @Bean
-    @Override
-    public UserDetailsService userDetailsServiceBean() throws Exception {
-        return super.userDetailsServiceBean();
-    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         if (env.acceptsProfiles(AppConstants.STAGE_DEV)) {
@@ -65,8 +59,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
             auth.jdbcAuthentication().passwordEncoder(passwordEncoder())
                 .usersByUsernameQuery("SELECT login, password, enabled FROM t_user WHERE login = ?")
                 .authoritiesByUsernameQuery("SELECT u.login, a.authority FROM t_user u, t_user_authority a " +
-                    "WHERE u.uuid = t.user_uuid AND u.login = ?");
+                        "WHERE u.uuid = t.user_uuid AND u.login = ?");
         }
+    }
+
+    @Bean
+    @Override
+    public UserDetailsService userDetailsServiceBean() throws Exception {
+        return super.userDetailsServiceBean();
     }
 
     @Override
@@ -79,13 +79,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                     .and()
                 .formLogin()
                     .loginProcessingUrl("/api/identity/login")
-                    .successHandler(new AjaxAuthenticationSuccessHandler())
-                    .failureHandler(new AjaxAuthenticationFailureHandler())
+                    .successHandler(new RestAuthenticationSuccessHandler())
+                    .failureHandler(new SimpleUrlAuthenticationFailureHandler())
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .permitAll()
                     .and()
                 .logout()
+                    .invalidateHttpSession(true)
                     .logoutUrl("/api/identity/logout")
                     .deleteCookies("JSESSIONID")
                     .permitAll()
@@ -94,6 +95,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                     .disable()
                 .authorizeRequests()
                      // deny all access by default - you can override that with @Secured annotations in the controllers
-                    .antMatchers("/api/**").denyAll();
+                    .antMatchers("/api/**").denyAll()
+                    .anyRequest().authenticated();
     }
 }

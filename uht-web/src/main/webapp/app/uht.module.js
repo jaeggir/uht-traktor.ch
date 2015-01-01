@@ -22,6 +22,10 @@
 
     angular.module('uht', [
 
+        /* AngularJS modules */
+        'ngRoute',
+        'ngResource',
+
         /* common modules */
         'uht.core',
         'uht.api'
