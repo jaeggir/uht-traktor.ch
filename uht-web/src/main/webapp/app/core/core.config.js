@@ -23,8 +23,8 @@
     core.factory('sessionInjector', function(TokenService) {
         var sessionInjector = {
             request: function(config) {
-                console.log(config.url);
-                if (config.url && config.url.startsWith('/api/')) {
+                // only add X-Auth-Token to /api/ requests except the login url /api/identity/login
+                if (config.url && config.url.startsWith('/api/') && !config.url.startsWith('/api/identity/login')) {
                     config.headers['X-Auth-Token'] = TokenService.getToken();
                 }
                 return config;
@@ -52,7 +52,7 @@
                     return authToken;
                 }
             }
-        }
+        };
     });
 
 }(window.angular));
