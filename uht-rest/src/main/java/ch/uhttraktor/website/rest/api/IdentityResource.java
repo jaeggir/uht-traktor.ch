@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import static ch.uhttraktor.website.domain.SecurityRole.ANONYMOUS;
 
@@ -23,14 +22,8 @@ public class IdentityResource {
      * GET  /identity/user -> get currently logged in user or null.
      */
     @RequestMapping(value = "/identity/user", method = RequestMethod.GET, produces = "application/json")
-    public User getCurrentUser(HttpServletRequest request) {
-        String remoteUser = request.getRemoteUser();
-        if (remoteUser != null) {
-            User user = userService.getCurrentUser();
-            return user;
-        } else {
-            return null;
-        }
+    public User getCurrentUser() {
+        return userService.getCurrentUser();
     }
 
 }
