@@ -1,1 +1,10 @@
-News
+<h1>News</h1>
+
+<p ng-repeat="entry in news">
+    <strong>{{entry.title}}</strong>
+    <p>
+        {{entry.content}}
+    </p>
+</p>
+
+<p ng-if="news.length === 0">Es wurden keine Einträge gefunden.</p>
