@@ -3,32 +3,30 @@
 
     angular
         .module('uht.api')
-        .factory('IdentityService', function($q, $resource, $http, TokenService) {
+        .factory('IdentityService', function($q, $http, TokenService) {
 
-            var user = null;
             var loadCurrentUser = function(deferred) {
 
+                if (angular.isUndefined(deferred) || deferred === null) {
+                    deferred = $q.defer();
+                }
+
                 $http.get('/api/identity/user').success(function(data) {
-                    user = data;
-                    if (!angular.isUndefined(deferred) && deferred !== null) {
-                        deferred.resolve();
-                    }
+                    deferred.resolve(data);
                 }).error(function() {
                     TokenService.removeToken();
-                    if (!angular.isUndefined(deferred) && deferred !== null) {
-                        deferred.reject();
-                    }
+                    deferred.reject();
                 });
+
+                return deferred.promise;
             };
-            loadCurrentUser(null);
+
+            var user = loadCurrentUser();
 
             return {
+
                 getCurrentUser: function() {
                     return user;
-                },
-
-                isAuthenticated: function() {
-                   return user !== null;
                 },
 
                 login: function(username, password) {
@@ -41,12 +39,12 @@
                             'X-Auth-Password': password
                         }
                     }).success(function (data, status, headers) {
-                        TokenService.saveToken(headers('X-Auth-Token'));
+                        var token = headers('X-Auth-Token');
+                        TokenService.saveToken(token);
                         loadCurrentUser(deferred);
                     }).error(function () {
                         user = null;
                         TokenService.removeToken();
-                        // tell the user about it
                         deferred.reject();
                     });
 
@@ -57,12 +55,9 @@
 
                     var deferred = $q.defer();
 
-                    $http.post('/api/identity/logout', {}).success(function () {
+                    $http.post('/api/identity/logout', {}).finally(function () {
                         TokenService.removeToken();
-                        deferred.resolve();
-                    }).error(function () {
-                        // ignore server and just remove the token from the local storage
-                        TokenService.removeToken();
+                        user = null;
                         deferred.resolve();
                     });
 
@@ -71,4 +66,5 @@
             };
 
         });
+
 }(window.angular));
