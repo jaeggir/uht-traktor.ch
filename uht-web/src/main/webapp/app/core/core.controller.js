@@ -24,20 +24,27 @@
 
         .controller('LoginController', function LoginController($scope, $location, IdentityService) {
 
-            $scope.user = {
-                username: 'user',
-                password: 'user'
-            };
+            $scope.user = {};
 
             $scope.login = function() {
-                IdentityService.login($scope.user.username, $scope.user.password).then(function() {
-                    $location.path('/news');
-                }, function(error) {
-                    console.log('login failed', error);
-                });
+
+                $scope.running = true;
+                $scope.loginError = false;
+
+                if (!$scope.form.$invalid) {
+                    IdentityService.login($scope.user.username, $scope.user.password).then(function() {
+                        $scope.running = false;
+                        $location.path('/news');
+                    }, function() {
+                        $scope.running = false;
+                        $scope.loginError = true;
+                    });
+                }
             };
 
-            $scope.login();
+            $scope.isValid = function () {
+                return !$scope.form.$invalid && !scope.running;
+            };
 
         })
 
