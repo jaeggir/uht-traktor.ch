@@ -1,5 +1,6 @@
 package ch.uhttraktor.website.rest.servlet.config.root;
 
+import ch.uhttraktor.website.AppConstants;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.flywaydb.core.Flyway;
 import org.springframework.context.EnvironmentAware;
@@ -69,7 +70,11 @@ public class DatabaseConfiguration implements EnvironmentAware {
         flyway.setValidateOnMigrate(Boolean.valueOf(env.getProperty("flyway.validateOnMigrate")));
 
         flyway.setOutOfOrder(true);
-        flyway.setLocations("classpath:db/migration");
+        if (env.acceptsProfiles(AppConstants.STAGE_DEV)) {
+            flyway.setLocations("classpath:db/migration", "db/testdata");
+        } else {
+            flyway.setLocations("classpath:db/migration");
+        }
 
         return flyway;
     }
