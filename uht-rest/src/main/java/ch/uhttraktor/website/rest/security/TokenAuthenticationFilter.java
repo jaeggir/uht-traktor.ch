@@ -49,13 +49,11 @@ public class TokenAuthenticationFilter extends GenericFilterBean {
         boolean authenticated = checkToken(httpRequest, httpResponse);
 
         if (canRequestProcessingContinue(httpRequest) && httpRequest.getMethod().equals("POST")) {
-
             if (authenticated) {
                 checkLogout(httpRequest);
             } else {
                 checkLogin(httpRequest, httpResponse);
             }
-
         }
 
         if (canRequestProcessingContinue(httpRequest)) {

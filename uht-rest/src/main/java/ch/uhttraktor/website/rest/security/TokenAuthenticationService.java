@@ -85,7 +85,7 @@ public class TokenAuthenticationService {
             Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
             try {
                 authentication = authenticationManager.authenticate(authentication);
-                // Here principal=UserDetails (UserContext in our case), credentials=null (security reasons)
+                // Here principal=UserDetails, credentials=null (security reasons)
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
                 if (authentication.getPrincipal() != null) {
