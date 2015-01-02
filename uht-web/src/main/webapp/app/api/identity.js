@@ -3,7 +3,7 @@
 
     angular
         .module('uht.api')
-        .factory('IdentityService', function($q, $http, TokenService) {
+        .factory('IdentityService', function($q, $rootScope, $http, TokenService) {
 
             var loadCurrentUser = function(deferred) {
 
@@ -13,6 +13,7 @@
 
                 $http.get('/api/identity/user').success(function(data) {
                     deferred.resolve(data);
+                    $rootScope.$broadcast('user:updated', data);
                 }).error(function() {
                     TokenService.removeToken();
                     deferred.reject();
@@ -58,6 +59,7 @@
                     $http.post('/api/identity/logout', {}).finally(function () {
                         TokenService.removeToken();
                         user = null;
+                        $rootScope.$broadcast('user:updated', null);
                         deferred.resolve();
                     });
 

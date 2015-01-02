@@ -5,10 +5,20 @@
         .module('uht.core')
 
         .controller('CoreController', function CoreController($scope, IdentityService) {
-            $scope.isAuthenticated = false;
-            IdentityService.getCurrentUser().then(function(data) {
+
+            var updateScope = function(data) {
                 $scope.user = data;
-                $scope.isAuthenticated = data.login !== 'anonymous';
+                $scope.isAuthenticated = !angular.isUndefined(data) && data !== null && data.login !== 'anonymous';
+            };
+
+            // init scope variables
+            IdentityService.getCurrentUser().then(function(data) {
+                updateScope(data);
+            });
+
+            // update scope variables on user change
+            $scope.$on('user:updated', function(event, data) {
+                updateScope(data);
             });
         })
 
