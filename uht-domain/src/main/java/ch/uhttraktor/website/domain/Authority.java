@@ -8,10 +8,14 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum Authority {
 
-    ANONYMOUS(SecurityRole.ANONYMOUS),
-    ADMIN(SecurityRole.ADMIN),
-    USER(SecurityRole.USER),
-    NEWS(SecurityRole.NEWS);
+    // Enum constant and name should be the same, otherwise Jackson cannot map between
+    // the String representation and the enum value. Example:
+    // Authority.ROLE_ANONYMOUS.name == "ROLE_ANONYMOUS"
+
+    ROLE_ANONYMOUS(SecurityRole.ANONYMOUS),
+    ROLE_ADMIN(SecurityRole.ADMIN),
+    ROLE_USER(SecurityRole.USER),
+    ROLE_NEWS(SecurityRole.NEWS);
 
     private String name;
 
