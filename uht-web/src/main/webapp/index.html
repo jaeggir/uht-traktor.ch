@@ -55,8 +55,8 @@
                         <li><a href="#/club/calendar">Jahresprogramm</a></li>
                         <li><a href="#/club/officials">Funktionäre</a></li>
                         <li><a href="#/club/documents">Dokumente</a></li>
-                        <li><a href="#/teams/facts-and-figures">Zahlen & Fakten</a></li>
-                        <li><a href="#/teams/awards">Auszeichnungen</a></li>
+                        <li><a href="#/club/facts-and-figures">Zahlen & Fakten</a></li>
+                        <li><a href="#/club/awards">Auszeichnungen</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -72,7 +72,7 @@
             <ul class="nav navbar-nav navbar-right padded-navbar-right" ng-cloak>
                 <li class="dropdown" ng-if="isAuthenticated">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        {{user.login}} <span class="caret"></span></a>
+                        {{user.firstName}} {{user.lastName}} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#/identity/logout"><span class="glyphicon glyphicon-user"></span> Logout</a></li>
                     </ul>
@@ -108,10 +108,15 @@
 <script src="app/api/api.module.js"></script>
 <script src="app/api/identity.js"></script>
 
-<!-- core module (always load .module.js first!) -->
+<!-- core (always load .module.js first!) -->
 <script src="app/core/core.module.js"></script>
 <script src="app/core/core.config.js"></script>
 <script src="app/core/core.controller.js"></script>
+
+<!-- news (always load .module.js first!) -->
+<script src="app/news/news.module.js"></script>
+<script src="app/news/news.config.js"></script>
+<script src="app/news/news.controller.js"></script>
 <!-- endbuild -->
 
 </body>

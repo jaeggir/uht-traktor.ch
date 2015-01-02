@@ -21,9 +21,9 @@
 
             $scope.login = function() {
                 IdentityService.login($scope.user.username, $scope.user.password).then(function() {
-                    console.log('login succeeded');
-                }, function() {
-                    console.log('login failed');
+                    $location.path('/news');
+                }, function(error) {
+                    console.log('login failed', error);
                 });
             };
 
@@ -31,8 +31,10 @@
 
         })
 
-        .controller('LogoutController', function LogoutController(IdentityService) {
-            IdentityService.logout();
+        .controller('LogoutController', function LogoutController($location, IdentityService) {
+            IdentityService.logout().finally(function() {
+                $location.path('/news');
+            });
         });
 
 }(window.angular));

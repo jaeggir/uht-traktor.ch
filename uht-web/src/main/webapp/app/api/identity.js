@@ -38,11 +38,11 @@
                             'X-Auth-Username': username,
                             'X-Auth-Password': password
                         }
-                    }).success(function (data, status, headers) {
+                    }).success(function(data, status, headers) {
                         var token = headers('X-Auth-Token');
                         TokenService.saveToken(token);
                         loadCurrentUser(deferred);
-                    }).error(function () {
+                    }).error(function() {
                         user = null;
                         TokenService.removeToken();
                         deferred.reject();

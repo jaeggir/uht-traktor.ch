@@ -16,6 +16,8 @@
         }).when('/identity/logout', {
             templateUrl: 'app/core/identity.logout.html',
             controller: 'LogoutController'
+        }).otherwise({
+            redirectTo: '/news'
         });
 
     });
