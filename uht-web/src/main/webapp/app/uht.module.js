@@ -14,7 +14,10 @@
             module: 'uht.core',
             resolve: {
                 APP_CONFIG: ['$http', function ($http) {
-                    return $http.get('/api/application');
+                    return $http.get('/api/application', {
+                        // set X-Auth-Token for anonymous
+                        headers: {'X-Auth-Token': 'qfRRrkEVwGWaq1TyZ4IxMJ9x69Lx/xu5lk2ji2d5iUA='}
+                    });
                 }]
             }
         }]
