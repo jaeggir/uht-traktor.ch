@@ -181,7 +181,7 @@ module.exports = function (grunt) {
         // run predefined tasks whenever watched file patterns are added, changed or deleted.
         watch: {
             styles: {
-                files: ['src/main/webapp/**/*.less'],
+                files: ['src/main/webapp/app/styles/*.less'],
                 tasks: ['less:dist', 'copy:styles'],
                 options: {
                     nospawn: true
@@ -215,8 +215,7 @@ module.exports = function (grunt) {
                 port: 8080,
                 https: false,
                 changeOrigin: false,
-                xforward: true,
-                ws: true
+                xforward: true
             },
             livereload: {
                 options: {
