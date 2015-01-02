@@ -50,7 +50,7 @@ public class NewsResource {
     /**
      * POST  /news -> create or update news entry
      */
-    @RequestMapping(value = "/news/{uuid}", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/news", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
     public News createOrUpdateEntry(HttpServletResponse response, @RequestBody News news) {
         return newsService.createOrUpdate(response, news);
     }
