@@ -8,6 +8,7 @@ import ch.uhttraktor.website.rest.servlet.config.ApplicationConfiguration;
 import ch.uhttraktor.website.rest.servlet.config.DatabaseConfiguration;
 import ch.uhttraktor.website.rest.servlet.config.MvcConfiguration;
 import ch.uhttraktor.website.rest.servlet.config.SecurityConfiguration;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -17,7 +18,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import java.util.TimeZone;
 
-public class MvcInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class ServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     private static final String SERVLET_NAME = "uht-web";
 
@@ -50,8 +51,9 @@ public class MvcInitializer extends AbstractAnnotationConfigDispatcherServletIni
     @Override
     protected Filter[] getServletFilters() {
          return new Filter[] {
-                 new CorsFilter(),
-                 new HiddenHttpMethodFilter()
+                 new DelegatingFilterProxy("springSecurityFilterChain"), // must be the first one in the list!
+                 new HiddenHttpMethodFilter(),
+                 new CorsFilter()
         };
     }
 
