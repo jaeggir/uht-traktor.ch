@@ -43,7 +43,7 @@
             };
 
             $scope.isValid = function () {
-                return !$scope.form.$invalid && !scope.running;
+                return !$scope.form.$invalid && !$scope.running;
             };
 
         })
