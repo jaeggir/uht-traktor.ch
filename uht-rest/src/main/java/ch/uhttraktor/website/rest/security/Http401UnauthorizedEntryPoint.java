@@ -17,9 +17,6 @@ public class Http401UnauthorizedEntryPoint implements AuthenticationEntryPoint {
 
     private final Logger log = LogManager.getLogger(Http401UnauthorizedEntryPoint.class);
 
-    /**
-     * Always returns a 401 error code to the client.
-     */
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
 

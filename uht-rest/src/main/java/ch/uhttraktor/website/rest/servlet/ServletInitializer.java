@@ -4,18 +4,15 @@ import ch.uhttraktor.website.AppConstants;
 import ch.uhttraktor.website.rest.filter.CachingHttpHeadersFilter;
 import ch.uhttraktor.website.rest.filter.CorsFilter;
 import ch.uhttraktor.website.rest.filter.StaticResourcesProductionFilter;
-import ch.uhttraktor.website.rest.servlet.config.ApplicationConfiguration;
-import ch.uhttraktor.website.rest.servlet.config.DatabaseConfiguration;
-import ch.uhttraktor.website.rest.servlet.config.MvcConfiguration;
-import ch.uhttraktor.website.rest.servlet.config.SecurityConfiguration;
+import ch.uhttraktor.website.rest.servlet.config.root.ApplicationConfiguration;
+import ch.uhttraktor.website.rest.servlet.config.root.DatabaseConfiguration;
+import ch.uhttraktor.website.rest.servlet.config.mvc.MvcConfiguration;
+import ch.uhttraktor.website.rest.servlet.config.root.SecurityConfiguration;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import java.util.TimeZone;
 
 public class ServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {

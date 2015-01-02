@@ -1,4 +1,4 @@
-package ch.uhttraktor.website.rest.servlet.config;
+package ch.uhttraktor.website.rest.servlet.config.root;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.flywaydb.core.Flyway;

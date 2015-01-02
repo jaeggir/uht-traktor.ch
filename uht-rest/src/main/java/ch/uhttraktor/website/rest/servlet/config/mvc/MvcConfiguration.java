@@ -1,4 +1,4 @@
-package ch.uhttraktor.website.rest.servlet.config;
+package ch.uhttraktor.website.rest.servlet.config.mvc;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,7 +44,6 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         interceptor.setEntityManagerFactory(entityManagerFactory);
         registry.addWebRequestInterceptor(interceptor);
     }
-
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {

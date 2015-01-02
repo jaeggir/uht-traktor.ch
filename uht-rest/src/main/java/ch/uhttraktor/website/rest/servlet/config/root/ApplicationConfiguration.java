@@ -1,4 +1,4 @@
-package ch.uhttraktor.website.rest.servlet.config;
+package ch.uhttraktor.website.rest.servlet.config.root;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

@@ -1,4 +1,4 @@
-package ch.uhttraktor.website.rest.servlet.config;
+package ch.uhttraktor.website.rest.servlet.config.root;
 
 import ch.uhttraktor.website.AppConstants;
 import ch.uhttraktor.website.rest.security.Http401UnauthorizedEntryPoint;
@@ -85,8 +85,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                 .anonymous().disable()
                 // define default authentication entry point which throws a 401
                 .exceptionHandling().authenticationEntryPoint(new Http401UnauthorizedEntryPoint()).and()
-                // disable formLogin and logout - we have a token-based authentication
-                .formLogin().disable().logout().disable()
                 // token handling
                 .addFilterBefore(new TokenAuthenticationFilter(
                         tokenAuthenticationService(),
