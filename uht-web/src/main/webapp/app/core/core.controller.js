@@ -12,7 +12,10 @@
 
         .controller('LoginController', function LoginController($scope, IdentityService) {
 
-            $scope.user = {};
+            $scope.user = {
+                username: '',
+                password: ''
+            };
 
             $scope.login = function() {
                 IdentityService.login($scope.user.username, $scope.user.password);
