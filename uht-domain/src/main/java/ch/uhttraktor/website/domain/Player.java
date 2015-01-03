@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @Entity
 @DynamicUpdate
-@Table(name = "T_PLAYER")
+@Table(name = "t_player")
 public class Player extends BaseEntity {
 
     @NotNull

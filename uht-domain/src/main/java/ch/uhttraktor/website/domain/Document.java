@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Setter
 @Entity
 @DynamicUpdate
-@Table(name = "T_DOCUMENT")
+@Table(name = "t_document")
 public class Document extends BaseEntity {
 
     @NotNull

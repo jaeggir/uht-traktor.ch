@@ -19,7 +19,7 @@ import java.util.List;
 @Setter
 @Entity
 @DynamicUpdate
-@Table(name = "T_USER", indexes = {
+@Table(name = "t_user", indexes = {
         @Index(columnList = "login")
 })
 public class User extends BaseEntity {
@@ -60,7 +60,7 @@ public class User extends BaseEntity {
     @Column(name = "authority")
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Authority.class)
-    @CollectionTable(name = "T_USER_AUTHORITY", joinColumns = @JoinColumn(name = "user_uuid"))
+    @CollectionTable(name = "t_user_authority", joinColumns = @JoinColumn(name = "user_uuid"))
     private List<Authority> authorities = new LinkedList<>();
 
     @Override

@@ -14,7 +14,7 @@ import java.time.Instant;
 @Setter
 @Entity
 @DynamicUpdate
-@Table(name = "T_NEWS")
+@Table(name = "t_news")
 public class News extends BaseEntity {
 
     @NotNull

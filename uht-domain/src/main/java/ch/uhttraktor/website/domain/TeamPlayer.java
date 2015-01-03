@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @Setter
 @Entity
 @DynamicUpdate
-@Table(name = "T_TEAM_PLAYER", uniqueConstraints = {
+@Table(name = "t_team_player", uniqueConstraints = {
         @UniqueConstraint(columnNames={"team_uuid", "player_uuid"})
 })
 public class TeamPlayer extends BaseEntity {
