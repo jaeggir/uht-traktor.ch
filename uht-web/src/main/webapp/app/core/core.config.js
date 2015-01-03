@@ -46,7 +46,7 @@
                         case 401:
                         // same message for 401 and 403 - fall through
                         case 403:
-                            $rootScope.$broadcast('user:auth-error', rejection);
+                            $rootScope.$broadcast('user:no-auth', rejection);
                             break;
                     }
 

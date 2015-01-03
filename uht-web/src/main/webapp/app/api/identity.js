@@ -13,7 +13,7 @@
 
                 $http.get('/api/identity/user').success(function(data) {
                     deferred.resolve(data);
-                    $rootScope.$broadcast('user:updated', data);
+                    $rootScope.$broadcast('user:login', data);
                 }).error(function() {
                     TokenService.removeToken();
                     deferred.reject();
@@ -52,14 +52,17 @@
                     return deferred.promise;
                 },
 
+                clear: function() {
+                    TokenService.removeToken();
+                    user = null;
+                },
+
                 logout: function() {
 
                     var deferred = $q.defer();
 
                     $http.post('/api/identity/logout', {}).finally(function () {
-                        TokenService.removeToken();
-                        user = null;
-                        $rootScope.$broadcast('user:updated', null);
+                        $rootScope.$broadcast('user:no-auth', null);
                         deferred.resolve();
                     });
 

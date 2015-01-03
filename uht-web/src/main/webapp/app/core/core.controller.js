@@ -17,15 +17,15 @@
             });
 
             // update scope variables on user change
-            $scope.$on('user:updated', function(event, data) {
+            $scope.$on('user:login', function(event, data) {
                 updateScope(data);
             });
 
             // logout and go to index page
-            $scope.$on('user:auth-error', function() {
-                IdentityService.logout().finally(function() {
-                    $location.path('/');
-                });
+            $scope.$on('user:no-auth', function() {
+                IdentityService.clear();
+                updateScope(null);
+                $location.path('/');
             });
         })
 
@@ -56,9 +56,7 @@
         })
 
         .controller('LogoutController', function LogoutController($location, IdentityService) {
-            IdentityService.logout().finally(function() {
-                $location.path('/');
-            });
+            IdentityService.logout();
         });
 
 }(window.angular));
