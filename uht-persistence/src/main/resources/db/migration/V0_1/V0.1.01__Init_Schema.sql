@@ -30,6 +30,24 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: t_document; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
+--
+
+CREATE TABLE t_document (
+    uuid character varying(255) NOT NULL,
+    datecreated timestamp without time zone DEFAULT now(),
+    lastmodified timestamp without time zone,
+    category character varying(255) NOT NULL,
+    content bytea NOT NULL,
+    filename character varying(255) NOT NULL,
+    size bigint NOT NULL,
+    title character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.t_document OWNER TO uht;
+
+--
 -- Name: t_news; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
 --
 
@@ -127,6 +145,14 @@ CREATE TABLE t_user_authority (
 
 
 ALTER TABLE public.t_user_authority OWNER TO uht;
+
+--
+-- Name: t_document_pkey; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_document
+    ADD CONSTRAINT t_document_pkey PRIMARY KEY (uuid);
+
 
 --
 -- Name: t_news_pkey; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
