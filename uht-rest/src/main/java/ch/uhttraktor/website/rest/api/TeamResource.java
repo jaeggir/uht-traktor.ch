@@ -48,7 +48,7 @@ public class TeamResource {
     /**
      * POST  /teams -> create or update team
      */
-    @RequestMapping(value = "/news", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/teams", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
     public Team createOrUpdateTeam(HttpServletResponse response, @RequestBody Team team) {
         return teamService.createOrUpdate(response, team);
     }
