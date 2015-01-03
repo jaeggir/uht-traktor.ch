@@ -49,7 +49,7 @@ module.exports = function (grunt) {
                     compress: true,
                     yuicompress: true,
                     optimization: 2,
-                    sourceMap: true
+                    sourceMap: false
                 },
                 files: {
                     '<%= config.app %>/styles/app.css': '<%= config.app %>/styles/app.less'
