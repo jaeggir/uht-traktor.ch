@@ -7,6 +7,7 @@ INSERT INTO t_user (uuid, datecreated, lastmodified, email, firstname, lastname,
 -- set roles: ROLE_USER and ROLE_NEWS
 INSERT INTO t_user_authority (user_uuid, authority) VALUES ('ac06a743-3c72-4dea-828c-c23861d12040', 'ROLE_USER');
 INSERT INTO t_user_authority (user_uuid, authority) VALUES ('ac06a743-3c72-4dea-828c-c23861d12040', 'ROLE_NEWS');
+INSERT INTO t_user_authority (user_uuid, authority) VALUES ('ac06a743-3c72-4dea-828c-c23861d12040', 'ROLE_TEAMS');
 
 -- create user 'admin' with password 'admin'
 INSERT INTO t_user (uuid, datecreated, lastmodified, email, firstname, lastname, login, password, enabled) VALUES
@@ -17,4 +18,5 @@ INSERT INTO t_user (uuid, datecreated, lastmodified, email, firstname, lastname,
 -- set roles: ROLE_USER and ROLE_ADMIN
 INSERT INTO t_user_authority (user_uuid, authority) VALUES ('24fca0be-b19a-45c5-a76d-bce521c27fff', 'ROLE_USER');
 INSERT INTO t_user_authority (user_uuid, authority) VALUES ('24fca0be-b19a-45c5-a76d-bce521c27fff', 'ROLE_NEWS');
+INSERT INTO t_user_authority (user_uuid, authority) VALUES ('24fca0be-b19a-45c5-a76d-bce521c27fff', 'ROLE_TEAMS');
 INSERT INTO t_user_authority (user_uuid, authority) VALUES ('24fca0be-b19a-45c5-a76d-bce521c27fff', 'ROLE_ADMIN');
