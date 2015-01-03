@@ -7,7 +7,7 @@
 
             var loadCurrentUser = function(deferred) {
 
-                if (angular.isUndefined(deferred) || deferred === null) {
+                if (angular.isUndefined(deferred)) {
                     deferred = $q.defer();
                 }
 

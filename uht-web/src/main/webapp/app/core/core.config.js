@@ -51,8 +51,7 @@
                     }
 
                 }
-
-                // restore default behaviour
+                // default behaviour
                 return $q.reject(rejection);
             }
         };
