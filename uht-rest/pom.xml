@@ -25,7 +25,7 @@
 
         <!-- module dependencies -->
 
-        <!-- Spring -->
+        <!-- Spring Security Framework -->
 
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -37,14 +37,14 @@
             <artifactId>spring-security-config</artifactId>
         </dependency>
 
-        <!-- File upload -->
+        <!-- File Upload -->
 
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
         </dependency>
 
-        <!-- Servlet 3.x support -->
+        <!-- Servlet 3.x Support -->
 
         <dependency>
             <groupId>javax.servlet</groupId>
