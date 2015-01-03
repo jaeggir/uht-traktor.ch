@@ -48,6 +48,40 @@ CREATE TABLE t_document (
 ALTER TABLE public.t_document OWNER TO uht;
 
 --
+-- Name: t_event; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
+--
+
+CREATE TABLE t_event (
+    uuid character varying(255) NOT NULL,
+    datecreated timestamp without time zone DEFAULT now(),
+    lastmodified timestamp without time zone,
+    allday boolean NOT NULL,
+    description character varying(255) NOT NULL,
+    enddate timestamp without time zone NOT NULL,
+    highlight boolean NOT NULL,
+    link character varying(255),
+    location character varying(64) NOT NULL,
+    startdate timestamp without time zone NOT NULL,
+    suhv boolean NOT NULL,
+    title character varying(64) NOT NULL
+);
+
+
+ALTER TABLE public.t_event OWNER TO uht;
+
+--
+-- Name: t_event_t_team; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
+--
+
+CREATE TABLE t_event_t_team (
+    t_event_uuid character varying(255) NOT NULL,
+    teams_uuid character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.t_event_t_team OWNER TO uht;
+
+--
 -- Name: t_news; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
 --
 
@@ -155,6 +189,14 @@ ALTER TABLE ONLY t_document
 
 
 --
+-- Name: t_event_pkey; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_event
+    ADD CONSTRAINT t_event_pkey PRIMARY KEY (uuid);
+
+
+--
 -- Name: t_news_pkey; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
 --
 
@@ -195,67 +237,83 @@ ALTER TABLE ONLY t_user
 
 
 --
--- Name: uk_53q42ugkktpyx4tmmen8vafwm; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
---
-
-ALTER TABLE ONLY t_team_player
-    ADD CONSTRAINT uk_53q42ugkktpyx4tmmen8vafwm UNIQUE (team_uuid, player_uuid);
-
-
---
--- Name: uk_70ue2h6a1dh8u84n6eclf1otc; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
---
-
-ALTER TABLE ONLY t_team
-    ADD CONSTRAINT uk_70ue2h6a1dh8u84n6eclf1otc UNIQUE (name);
-
-
---
--- Name: uk_j6oekeo96ojgrja7wq1gocui6; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
---
-
-ALTER TABLE ONLY t_team
-    ADD CONSTRAINT uk_j6oekeo96ojgrja7wq1gocui6 UNIQUE (shortname);
-
-
---
--- Name: uk_sa4df0alibrd29bxd4c9e5371; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+-- Name: uk_7gshuknepkj6oy1702fqwsr8r; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
 --
 
 ALTER TABLE ONLY t_user
-    ADD CONSTRAINT uk_sa4df0alibrd29bxd4c9e5371 UNIQUE (login);
+    ADD CONSTRAINT uk_7gshuknepkj6oy1702fqwsr8r UNIQUE (login);
 
 
 --
--- Name: fk_74iacq81mvxbxhq2u0dgee7w6; Type: FK CONSTRAINT; Schema: public; Owner: uht
+-- Name: uk_7n8x7eb8lnkx3cmaww1a0n6fs; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
 --
 
-ALTER TABLE ONLY t_team_player
-    ADD CONSTRAINT fk_74iacq81mvxbxhq2u0dgee7w6 FOREIGN KEY (player_uuid) REFERENCES t_player(uuid);
-
-
---
--- Name: fk_7o2kjeaecihcwod4tv783all5; Type: FK CONSTRAINT; Schema: public; Owner: uht
---
-
-ALTER TABLE ONLY t_user_authority
-    ADD CONSTRAINT fk_7o2kjeaecihcwod4tv783all5 FOREIGN KEY (user_uuid) REFERENCES t_user(uuid);
+ALTER TABLE ONLY t_team
+    ADD CONSTRAINT uk_7n8x7eb8lnkx3cmaww1a0n6fs UNIQUE (shortname);
 
 
 --
--- Name: fk_na1q8i4eeox12uwpyc10e2kdr; Type: FK CONSTRAINT; Schema: public; Owner: uht
+-- Name: uk_eeb5dwa84vaa3p7rcb3s66y7k; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
 --
 
 ALTER TABLE ONLY t_team_player
-    ADD CONSTRAINT fk_na1q8i4eeox12uwpyc10e2kdr FOREIGN KEY (team_uuid) REFERENCES t_team(uuid);
+    ADD CONSTRAINT uk_eeb5dwa84vaa3p7rcb3s66y7k UNIQUE (team_uuid, player_uuid);
 
 
 --
--- Name: fk_rtsqhn334mrptd2fughbb2yks; Type: FK CONSTRAINT; Schema: public; Owner: uht
+-- Name: uk_jjfob8lq6bxlkwuphm9t9ofrs; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_team
+    ADD CONSTRAINT uk_jjfob8lq6bxlkwuphm9t9ofrs UNIQUE (name);
+
+
+--
+-- Name: fk_2ax987itrmae65p6hv04eno0x; Type: FK CONSTRAINT; Schema: public; Owner: uht
+--
+
+ALTER TABLE ONLY t_event_t_team
+    ADD CONSTRAINT fk_2ax987itrmae65p6hv04eno0x FOREIGN KEY (teams_uuid) REFERENCES t_team(uuid);
+
+
+--
+-- Name: fk_35nuridne52e0og7i0y5lm02w; Type: FK CONSTRAINT; Schema: public; Owner: uht
 --
 
 ALTER TABLE ONLY t_news
-    ADD CONSTRAINT fk_rtsqhn334mrptd2fughbb2yks FOREIGN KEY (user_uuid) REFERENCES t_user(uuid);
+    ADD CONSTRAINT fk_35nuridne52e0og7i0y5lm02w FOREIGN KEY (user_uuid) REFERENCES t_user(uuid);
+
+
+--
+-- Name: fk_bdcuvy43iogdixuugltku971f; Type: FK CONSTRAINT; Schema: public; Owner: uht
+--
+
+ALTER TABLE ONLY t_user_authority
+    ADD CONSTRAINT fk_bdcuvy43iogdixuugltku971f FOREIGN KEY (user_uuid) REFERENCES t_user(uuid);
+
+
+--
+-- Name: fk_jav05akf2yk4jxjrs85cafw4g; Type: FK CONSTRAINT; Schema: public; Owner: uht
+--
+
+ALTER TABLE ONLY t_team_player
+    ADD CONSTRAINT fk_jav05akf2yk4jxjrs85cafw4g FOREIGN KEY (team_uuid) REFERENCES t_team(uuid);
+
+
+--
+-- Name: fk_k6p91snerk5c0042j5oq3n690; Type: FK CONSTRAINT; Schema: public; Owner: uht
+--
+
+ALTER TABLE ONLY t_team_player
+    ADD CONSTRAINT fk_k6p91snerk5c0042j5oq3n690 FOREIGN KEY (player_uuid) REFERENCES t_player(uuid);
+
+
+--
+-- Name: fk_kjtf8hpnxyn62g6i3kssh7p2u; Type: FK CONSTRAINT; Schema: public; Owner: uht
+--
+
+ALTER TABLE ONLY t_event_t_team
+    ADD CONSTRAINT fk_kjtf8hpnxyn62g6i3kssh7p2u FOREIGN KEY (t_event_uuid) REFERENCES t_event(uuid);
 
 
 --

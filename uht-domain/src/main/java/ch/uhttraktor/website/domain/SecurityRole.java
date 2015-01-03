@@ -15,5 +15,6 @@ public interface SecurityRole {
     public static final String TEAMS = "ROLE_TEAMS";
     public static final String NEWS = "ROLE_NEWS";
     public static final String DOCUMENTS = "ROLE_DOCUMENTS";
+    public static final String EVENTS = "ROLE_EVENTS";
 
 }
