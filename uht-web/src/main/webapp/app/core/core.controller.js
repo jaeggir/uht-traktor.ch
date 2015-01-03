@@ -4,7 +4,7 @@
     angular
         .module('uht.core')
 
-        .controller('CoreController', function CoreController($scope, IdentityService) {
+        .controller('CoreController', function CoreController($scope, $location, IdentityService) {
 
             var updateScope = function(data) {
                 $scope.user = data;
@@ -20,6 +20,13 @@
             $scope.$on('user:updated', function(event, data) {
                 updateScope(data);
             });
+
+            // logout and go to index page
+            $scope.$on('user:auth-error', function() {
+                IdentityService.logout().finally(function() {
+                    $location.path('/');
+                });
+            });
         })
 
         .controller('LoginController', function LoginController($scope, $location, IdentityService) {
@@ -34,7 +41,7 @@
                 if (!$scope.form.$invalid) {
                     IdentityService.login($scope.user.username, $scope.user.password).then(function() {
                         $scope.running = false;
-                        $location.path('/news');
+                        $location.path('/');
                     }, function() {
                         $scope.running = false;
                         $scope.loginError = true;
@@ -50,7 +57,7 @@
 
         .controller('LogoutController', function LogoutController($location, IdentityService) {
             IdentityService.logout().finally(function() {
-                $location.path('/news');
+                $location.path('/');
             });
         });
 

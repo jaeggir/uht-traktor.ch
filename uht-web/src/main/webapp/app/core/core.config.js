@@ -5,11 +5,14 @@
 
     core.config(function ($httpProvider, $logProvider, $compileProvider, $routeProvider, APP_CONFIG) {
 
+        // $http interceptor to set x-auth-token and to intercept 401 and 403
         $httpProvider.interceptors.push('sessionInjector');
 
+        // disable debug mode in production
         $compileProvider.debugInfoEnabled(APP_CONFIG.releaseStage !== 'prod');
         $logProvider.debugEnabled(APP_CONFIG.releaseStage !== 'prod');
 
+        // define core routes
         $routeProvider.when('/identity/login', {
             templateUrl: 'app/core/identity.login.html',
             controller: 'LoginController'
@@ -22,17 +25,37 @@
 
     });
 
-    core.factory('sessionInjector', function(TokenService) {
-        var sessionInjector = {
-            request: function(config) {
+    core.factory('sessionInjector', function($q, $rootScope, TokenService) {
+        return {
+
+            'request': function(config) {
+
                 // only add X-Auth-Token to /api/ requests except the login url /api/identity/login
-                if (config.url && config.url.startsWith('/api/') && !config.url.startsWith('/api/identity/login')) {
+                if (!config.url.startsWith('/api/identity/login')) {
                     config.headers['X-Auth-Token'] = TokenService.getToken();
                 }
+
                 return config;
+            },
+
+            'responseError': function(rejection) {
+
+                if (!rejection.config.url.startsWith('/api/identity/login')) {
+
+                    switch (rejection.status) {
+                        case 401:
+                        // same message for 401 and 403 - fall through
+                        case 403:
+                            $rootScope.$broadcast('user:auth-error', rejection);
+                            break;
+                    }
+
+                }
+
+                // restore default behaviour
+                return $q.reject(rejection);
             }
         };
-        return sessionInjector;
     });
 
     core.factory('TokenService', function() {
