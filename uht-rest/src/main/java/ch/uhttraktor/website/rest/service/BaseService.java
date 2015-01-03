@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -30,6 +31,11 @@ public abstract class BaseService<T extends BaseEntity> {
             }
             return entity;
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<T> findAll() {
+        return getRepository().findAll();
     }
 
     @Transactional(readOnly = true)
