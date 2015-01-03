@@ -65,7 +65,7 @@ public class InMemoryTokenManager {
             new Thread(() -> {
                 Iterator<Map.Entry<String, Tuple>> iterator = validTokens.entrySet().iterator();
                 while (iterator.hasNext()) {
-                    long created = iterator.next().getValue().getTokenInfo().getCreated();
+                    long created = iterator.next().getValue().getTokenInfo().getModificationDate();
                     if ((System.currentTimeMillis() - created) > TOKEN_LIFETIME_IN_MS) {
                         iterator.remove();
                     }
@@ -83,10 +83,11 @@ public class InMemoryTokenManager {
         Tuple tuple = validTokens.get(token);
         if (tuple != null) {
             // token still valid?
-            if ((System.currentTimeMillis() - tuple.getTokenInfo().getCreated()) > TOKEN_LIFETIME_IN_MS) {
+            if ((System.currentTimeMillis() - tuple.getTokenInfo().getModificationDate()) > TOKEN_LIFETIME_IN_MS) {
                 validTokens.remove(token);
                 return null;
             } else {
+                tuple.getTokenInfo().updateModificationDate();
                 return tuple.getUserDetails();
             }
         } else {
