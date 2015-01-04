@@ -4,17 +4,23 @@ package ch.uhttraktor.website.domain.suhv;
 import ch.uhttraktor.website.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @DynamicUpdate
+@XmlRootElement(name = "table")
+@XmlAccessorType(XmlAccessType.FIELD)
 @Table(name = "t_suhv_standings")
 public class Standings extends BaseEntity {
 
@@ -23,48 +29,58 @@ public class Standings extends BaseEntity {
     private Integer season;
 
     @Size(max = 32)
+    @XmlAttribute(name = "leaguetype")
     @Column(unique = false, nullable = true, length = 32)
-    private String leaguetype;
+    private String leagueType;
 
     @NotNull
-    @Size(max = 128)
-    @Column(unique = false, nullable = false, length = 128)
-    private Integer leaguecode;
+    @XmlAttribute(name = "leaguecode")
+    @Column(unique = false, nullable = false)
+    private Integer leagueCode;
 
     @Size(max = 128)
+    @XmlAttribute(name = "leaguetext")
     @Column(unique = false, nullable = true, length = 128)
-    private String leaguetext;
+    private String leagueText;
 
     @Size(max = 32)
+    @XmlAttribute(name = "competitiontype")
     @Column(unique = false, nullable = true, length = 32)
-    private String competitiontype;
+    private String competitionType;
 
     @NotNull
     @Size(max = 32)
+    @XmlAttribute(name = "group")
     @Column(name = "c_group", unique = false, nullable = false, length = 32)
     private String group;
 
     @Size(max = 32)
+    @XmlAttribute(name = "grouptext")
     @Column(unique = false, nullable = true, length = 32)
-    private String grouptext;
+    private String groupText;
 
     @NotNull
+    @XmlAttribute(name = "bar1")
     @Column(unique = false, nullable = false)
     private Integer bar1;
 
     @NotNull
+    @XmlAttribute(name = "bar2")
     @Column(unique = false, nullable = false)
     private Integer bar2;
 
     @NotNull
+    @XmlAttribute(name = "bar3")
     @Column(unique = false, nullable = false)
     private Integer bar3;
 
-    @OneToMany(mappedBy = "standings", orphanRemoval = true, cascade = {CascadeType.REMOVE})
+    @XmlElement(name = "entry")
+    @Cascade(CascadeType.ALL)
+    @OneToMany(mappedBy = "standings", orphanRemoval = true)
     private List<StandingsEntry> entries;
 
     @NotNull
-    @OneToOne(optional = false)
+    @OneToOne(mappedBy = "standings", optional = false)
     private SuhvTeam team;
 
 }

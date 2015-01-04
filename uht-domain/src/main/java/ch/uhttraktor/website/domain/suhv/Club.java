@@ -3,12 +3,19 @@ package ch.uhttraktor.website.domain.suhv;
 import ch.uhttraktor.website.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+
+import static javax.persistence.FetchType.LAZY;
 
 
 @Getter
@@ -31,7 +38,8 @@ public class Club extends BaseEntity {
     @Column(unique = false, nullable = false)
     private Integer firstSuhvSeason;
 
-    @OneToMany(mappedBy = "club", orphanRemoval = true, cascade = {CascadeType.REMOVE})
+    @Cascade(CascadeType.ALL)
+    @OneToMany(mappedBy = "club", fetch = LAZY, orphanRemoval = true)
     private List<SuhvTeam> teams;
 
 }

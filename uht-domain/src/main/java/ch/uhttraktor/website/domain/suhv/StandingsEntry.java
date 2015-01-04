@@ -9,73 +9,86 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 
 @Getter
 @Setter
 @Entity
 @DynamicUpdate
+@XmlAccessorType(XmlAccessType.FIELD)
 @Table(name = "t_suhv_standings_entry")
 public class StandingsEntry extends BaseEntity {
 
     @NotNull
-    @ManyToOne(optional = false)
-    private Standings standings;
-
-    @NotNull
+    @XmlAttribute(name = "place")
     @Column(unique = false, nullable = false)
     private Integer place;
 
     @NotNull
+    @XmlAttribute(name = "clubid")
     @Column(unique = false, nullable = false)
-    private Integer clubid;
+    private Integer clubId;
 
     @NotNull
+    @XmlAttribute(name = "teamid")
     @Column(unique = false, nullable = false)
-    private Integer teamid;
+    private Integer teamId;
 
     @NotNull
     @Size(max = 128)
+    @XmlAttribute(name = "teamname")
     @Column(unique = false, nullable = false, length = 128)
-    private String teamname;
+    private String teamName;
 
     @NotNull
+    @XmlAttribute(name = "games")
     @Column(unique = false, nullable = false)
     private Integer games;
 
     @NotNull
+    @XmlAttribute(name = "wins")
     @Column(unique = false, nullable = false)
     private Integer wins;
 
-    // wins-overtime
     @NotNull
+    @XmlAttribute(name = "wins-overtime")
     @Column(unique = false, nullable = false)
     private Integer winsOvertime;
 
     @NotNull
+    @XmlAttribute(name = "ties")
     @Column(unique = false, nullable = false)
     private Integer ties;
 
     @NotNull
+    @XmlAttribute(name = "defeats")
     @Column(unique = false, nullable = false)
     private Integer defeats;
 
-    // defeats-overtime
     @NotNull
+    @XmlAttribute(name = "defeats-overtime")
     @Column(unique = false, nullable = false)
     private Integer defeatsOvertime;
 
-    // goals-scored
     @NotNull
+    @XmlAttribute(name = "goals-scored")
     @Column(unique = false, nullable = false)
     private Integer goalsScored;
 
-    // goals-received
     @NotNull
+    @XmlAttribute(name = "goals-received")
     @Column(unique = false, nullable = false)
     private Integer goalsReceived;
 
     @NotNull
+    @XmlAttribute(name = "points")
     @Column(unique = false, nullable = false)
     private Integer points;
+
+    @NotNull
+    @ManyToOne(optional = false)
+    private Standings standings;
 
 }

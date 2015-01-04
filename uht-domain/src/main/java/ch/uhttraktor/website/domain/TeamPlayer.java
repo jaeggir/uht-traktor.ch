@@ -33,7 +33,7 @@ public class TeamPlayer extends BaseEntity {
 
     @Size(max = 4)
     @Column(unique = false, nullable = true, length = 4)
-    private String number;
+    private String shirtNumber;
 
     enum Role {
         GOALKEEPER,

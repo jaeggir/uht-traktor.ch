@@ -25,6 +25,17 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 SET search_path = public, pg_catalog;
 
+--
+-- Name: update_last_modified_column(); Type: FUNCTION; Schema: public; Owner: uht
+--
+
+CREATE FUNCTION update_last_modified_column() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$ BEGIN NEW.lastModified := current_timestamp; RETURN NEW; END; $$;
+
+
+ALTER FUNCTION public.update_last_modified_column() OWNER TO uht;
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -147,19 +158,25 @@ CREATE TABLE t_suhv_game (
     eventtype character varying(32) NOT NULL,
     fieldsize character varying(64),
     forfait boolean NOT NULL,
+    gametext integer,
     goalsaway integer NOT NULL,
     goalshome integer NOT NULL,
     hometeamid integer NOT NULL,
     hometeamname character varying(128) NOT NULL,
     id integer NOT NULL,
-    leaguecode character varying(8) NOT NULL,
+    leaguecode character varying(32) NOT NULL,
     leaguetext character varying(64),
-    leaguetype character varying(8) NOT NULL,
+    leaguetype character varying(32) NOT NULL,
+    organizer character varying(128),
+    organizerid integer,
     overtime boolean NOT NULL,
     penaltyshooting boolean NOT NULL,
     played boolean NOT NULL,
     c_round integer NOT NULL,
-    gym_uuid character varying(255) NOT NULL,
+    roundtext character varying(64),
+    tableau integer,
+    tableautext integer,
+    gym_uuid character varying(255),
     team_uuid character varying(255) NOT NULL
 );
 
@@ -177,9 +194,9 @@ CREATE TABLE t_suhv_gym (
     city character varying(255),
     country character varying(2),
     id integer NOT NULL,
+    name character varying(255),
     lat double precision NOT NULL,
     lng double precision NOT NULL,
-    name character varying(255),
     street character varying(255),
     zip integer
 );
@@ -204,8 +221,7 @@ CREATE TABLE t_suhv_standings (
     leaguecode integer NOT NULL,
     leaguetext character varying(128),
     leaguetype character varying(32),
-    season integer NOT NULL,
-    team_uuid character varying(255) NOT NULL
+    season integer NOT NULL
 );
 
 
@@ -246,7 +262,6 @@ CREATE TABLE t_suhv_team (
     uuid character varying(255) NOT NULL,
     datecreated timestamp without time zone DEFAULT now(),
     lastmodified timestamp without time zone,
-    description character varying(128),
     c_group character varying(32) NOT NULL,
     grouptext character varying(32) NOT NULL,
     id integer NOT NULL,
@@ -285,8 +300,8 @@ CREATE TABLE t_team_player (
     uuid character varying(255) NOT NULL,
     datecreated timestamp without time zone DEFAULT now(),
     lastmodified timestamp without time zone,
-    number character varying(4),
     role character varying(255) NOT NULL,
+    shirtnumber character varying(4),
     player_uuid character varying(255) NOT NULL,
     team_uuid character varying(255) NOT NULL
 );
@@ -487,14 +502,6 @@ ALTER TABLE ONLY t_team_player
 
 
 --
--- Name: uk_f7e8wd9d6tfb4sfbe7de2awro; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
---
-
-ALTER TABLE ONLY t_suhv_team
-    ADD CONSTRAINT uk_f7e8wd9d6tfb4sfbe7de2awro UNIQUE (id);
-
-
---
 -- Name: uk_jjfob8lq6bxlkwuphm9t9ofrs; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
 --
 
@@ -511,19 +518,102 @@ ALTER TABLE ONLY t_suhv_gym
 
 
 --
--- Name: uk_rnxy1f6vt5x39mospi2mlnod0; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
---
-
-ALTER TABLE ONLY t_suhv_standings
-    ADD CONSTRAINT uk_rnxy1f6vt5x39mospi2mlnod0 UNIQUE (team_uuid);
-
-
---
 -- Name: uk_s5kn3e3h14v6bf7jn7vsvq5nv; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
 --
 
 ALTER TABLE ONLY t_suhv_club
     ADD CONSTRAINT uk_s5kn3e3h14v6bf7jn7vsvq5nv UNIQUE (name);
+
+
+--
+-- Name: update_modtime; Type: TRIGGER; Schema: public; Owner: uht
+--
+
+CREATE TRIGGER update_modtime BEFORE INSERT OR UPDATE ON t_document FOR EACH ROW EXECUTE PROCEDURE update_last_modified_column();
+
+
+--
+-- Name: update_modtime; Type: TRIGGER; Schema: public; Owner: uht
+--
+
+CREATE TRIGGER update_modtime BEFORE INSERT OR UPDATE ON t_event FOR EACH ROW EXECUTE PROCEDURE update_last_modified_column();
+
+
+--
+-- Name: update_modtime; Type: TRIGGER; Schema: public; Owner: uht
+--
+
+CREATE TRIGGER update_modtime BEFORE INSERT OR UPDATE ON t_news FOR EACH ROW EXECUTE PROCEDURE update_last_modified_column();
+
+
+--
+-- Name: update_modtime; Type: TRIGGER; Schema: public; Owner: uht
+--
+
+CREATE TRIGGER update_modtime BEFORE INSERT OR UPDATE ON t_player FOR EACH ROW EXECUTE PROCEDURE update_last_modified_column();
+
+
+--
+-- Name: update_modtime; Type: TRIGGER; Schema: public; Owner: uht
+--
+
+CREATE TRIGGER update_modtime BEFORE INSERT OR UPDATE ON t_suhv_club FOR EACH ROW EXECUTE PROCEDURE update_last_modified_column();
+
+
+--
+-- Name: update_modtime; Type: TRIGGER; Schema: public; Owner: uht
+--
+
+CREATE TRIGGER update_modtime BEFORE INSERT OR UPDATE ON t_suhv_game FOR EACH ROW EXECUTE PROCEDURE update_last_modified_column();
+
+
+--
+-- Name: update_modtime; Type: TRIGGER; Schema: public; Owner: uht
+--
+
+CREATE TRIGGER update_modtime BEFORE INSERT OR UPDATE ON t_suhv_gym FOR EACH ROW EXECUTE PROCEDURE update_last_modified_column();
+
+
+--
+-- Name: update_modtime; Type: TRIGGER; Schema: public; Owner: uht
+--
+
+CREATE TRIGGER update_modtime BEFORE INSERT OR UPDATE ON t_suhv_standings FOR EACH ROW EXECUTE PROCEDURE update_last_modified_column();
+
+
+--
+-- Name: update_modtime; Type: TRIGGER; Schema: public; Owner: uht
+--
+
+CREATE TRIGGER update_modtime BEFORE INSERT OR UPDATE ON t_suhv_standings_entry FOR EACH ROW EXECUTE PROCEDURE update_last_modified_column();
+
+
+--
+-- Name: update_modtime; Type: TRIGGER; Schema: public; Owner: uht
+--
+
+CREATE TRIGGER update_modtime BEFORE INSERT OR UPDATE ON t_suhv_team FOR EACH ROW EXECUTE PROCEDURE update_last_modified_column();
+
+
+--
+-- Name: update_modtime; Type: TRIGGER; Schema: public; Owner: uht
+--
+
+CREATE TRIGGER update_modtime BEFORE INSERT OR UPDATE ON t_team FOR EACH ROW EXECUTE PROCEDURE update_last_modified_column();
+
+
+--
+-- Name: update_modtime; Type: TRIGGER; Schema: public; Owner: uht
+--
+
+CREATE TRIGGER update_modtime BEFORE INSERT OR UPDATE ON t_team_player FOR EACH ROW EXECUTE PROCEDURE update_last_modified_column();
+
+
+--
+-- Name: update_modtime; Type: TRIGGER; Schema: public; Owner: uht
+--
+
+CREATE TRIGGER update_modtime BEFORE INSERT OR UPDATE ON t_user FOR EACH ROW EXECUTE PROCEDURE update_last_modified_column();
 
 
 --
@@ -612,14 +702,6 @@ ALTER TABLE ONLY t_event_t_team
 
 ALTER TABLE ONLY t_suhv_game
     ADD CONSTRAINT fk_rbu06iekrio9i3wtgwa3f2b2m FOREIGN KEY (team_uuid) REFERENCES t_suhv_team(uuid);
-
-
---
--- Name: fk_rnxy1f6vt5x39mospi2mlnod0; Type: FK CONSTRAINT; Schema: public; Owner: uht
---
-
-ALTER TABLE ONLY t_suhv_standings
-    ADD CONSTRAINT fk_rnxy1f6vt5x39mospi2mlnod0 FOREIGN KEY (team_uuid) REFERENCES t_suhv_team(uuid);
 
 
 --
