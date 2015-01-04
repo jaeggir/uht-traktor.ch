@@ -116,6 +116,152 @@ CREATE TABLE t_player (
 ALTER TABLE public.t_player OWNER TO uht;
 
 --
+-- Name: t_suhv_club; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
+--
+
+CREATE TABLE t_suhv_club (
+    uuid character varying(255) NOT NULL,
+    datecreated timestamp without time zone DEFAULT now(),
+    lastmodified timestamp without time zone,
+    firstsuhvseason integer NOT NULL,
+    id integer NOT NULL,
+    name character varying(128) NOT NULL
+);
+
+
+ALTER TABLE public.t_suhv_club OWNER TO uht;
+
+--
+-- Name: t_suhv_game; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
+--
+
+CREATE TABLE t_suhv_game (
+    uuid character varying(255) NOT NULL,
+    datecreated timestamp without time zone DEFAULT now(),
+    lastmodified timestamp without time zone,
+    awayteamid integer NOT NULL,
+    awayteamname character varying(128) NOT NULL,
+    canceled boolean NOT NULL,
+    competitiontype character varying(32) NOT NULL,
+    c_date timestamp without time zone,
+    eventtype character varying(32) NOT NULL,
+    fieldsize character varying(64),
+    forfait boolean NOT NULL,
+    goalsaway integer NOT NULL,
+    goalshome integer NOT NULL,
+    hometeamid integer NOT NULL,
+    hometeamname character varying(128) NOT NULL,
+    id integer NOT NULL,
+    leaguecode character varying(8) NOT NULL,
+    leaguetext character varying(64),
+    leaguetype character varying(8) NOT NULL,
+    overtime boolean NOT NULL,
+    penaltyshooting boolean NOT NULL,
+    played boolean NOT NULL,
+    c_round integer NOT NULL,
+    gym_uuid character varying(255) NOT NULL,
+    team_uuid character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.t_suhv_game OWNER TO uht;
+
+--
+-- Name: t_suhv_gym; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
+--
+
+CREATE TABLE t_suhv_gym (
+    uuid character varying(255) NOT NULL,
+    datecreated timestamp without time zone DEFAULT now(),
+    lastmodified timestamp without time zone,
+    city character varying(255),
+    country character varying(2),
+    id integer NOT NULL,
+    lat double precision NOT NULL,
+    lng double precision NOT NULL,
+    name character varying(255),
+    street character varying(255),
+    zip integer
+);
+
+
+ALTER TABLE public.t_suhv_gym OWNER TO uht;
+
+--
+-- Name: t_suhv_standings; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
+--
+
+CREATE TABLE t_suhv_standings (
+    uuid character varying(255) NOT NULL,
+    datecreated timestamp without time zone DEFAULT now(),
+    lastmodified timestamp without time zone,
+    bar1 integer NOT NULL,
+    bar2 integer NOT NULL,
+    bar3 integer NOT NULL,
+    competitiontype character varying(32),
+    c_group character varying(32) NOT NULL,
+    grouptext character varying(32),
+    leaguecode integer NOT NULL,
+    leaguetext character varying(128),
+    leaguetype character varying(32),
+    season integer NOT NULL,
+    team_uuid character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.t_suhv_standings OWNER TO uht;
+
+--
+-- Name: t_suhv_standings_entry; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
+--
+
+CREATE TABLE t_suhv_standings_entry (
+    uuid character varying(255) NOT NULL,
+    datecreated timestamp without time zone DEFAULT now(),
+    lastmodified timestamp without time zone,
+    clubid integer NOT NULL,
+    defeats integer NOT NULL,
+    defeatsovertime integer NOT NULL,
+    games integer NOT NULL,
+    goalsreceived integer NOT NULL,
+    goalsscored integer NOT NULL,
+    place integer NOT NULL,
+    points integer NOT NULL,
+    teamid integer NOT NULL,
+    teamname character varying(128) NOT NULL,
+    ties integer NOT NULL,
+    wins integer NOT NULL,
+    winsovertime integer NOT NULL,
+    standings_uuid character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.t_suhv_standings_entry OWNER TO uht;
+
+--
+-- Name: t_suhv_team; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
+--
+
+CREATE TABLE t_suhv_team (
+    uuid character varying(255) NOT NULL,
+    datecreated timestamp without time zone DEFAULT now(),
+    lastmodified timestamp without time zone,
+    description character varying(128),
+    c_group character varying(32) NOT NULL,
+    grouptext character varying(32) NOT NULL,
+    id integer NOT NULL,
+    leaguecode integer,
+    season integer NOT NULL,
+    teamname character varying(128) NOT NULL,
+    teamromancounter character varying(4),
+    club_uuid character varying(255) NOT NULL,
+    standings_uuid character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.t_suhv_team OWNER TO uht;
+
+--
 -- Name: t_team; Type: TABLE; Schema: public; Owner: uht; Tablespace: 
 --
 
@@ -213,6 +359,54 @@ ALTER TABLE ONLY t_player
 
 
 --
+-- Name: t_suhv_club_pkey; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_suhv_club
+    ADD CONSTRAINT t_suhv_club_pkey PRIMARY KEY (uuid);
+
+
+--
+-- Name: t_suhv_game_pkey; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_suhv_game
+    ADD CONSTRAINT t_suhv_game_pkey PRIMARY KEY (uuid);
+
+
+--
+-- Name: t_suhv_gym_pkey; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_suhv_gym
+    ADD CONSTRAINT t_suhv_gym_pkey PRIMARY KEY (uuid);
+
+
+--
+-- Name: t_suhv_standings_entry_pkey; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_suhv_standings_entry
+    ADD CONSTRAINT t_suhv_standings_entry_pkey PRIMARY KEY (uuid);
+
+
+--
+-- Name: t_suhv_standings_pkey; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_suhv_standings
+    ADD CONSTRAINT t_suhv_standings_pkey PRIMARY KEY (uuid);
+
+
+--
+-- Name: t_suhv_team_pkey; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_suhv_team
+    ADD CONSTRAINT t_suhv_team_pkey PRIMARY KEY (uuid);
+
+
+--
 -- Name: t_team_pkey; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
 --
 
@@ -237,11 +431,27 @@ ALTER TABLE ONLY t_user
 
 
 --
+-- Name: uk_120cok6dek8f5aklb4yqh3t1w; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_suhv_team
+    ADD CONSTRAINT uk_120cok6dek8f5aklb4yqh3t1w UNIQUE (id, season);
+
+
+--
 -- Name: uk_7gshuknepkj6oy1702fqwsr8r; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
 --
 
 ALTER TABLE ONLY t_user
     ADD CONSTRAINT uk_7gshuknepkj6oy1702fqwsr8r UNIQUE (login);
+
+
+--
+-- Name: uk_7m26sod48nvwd090ohy741di4; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_suhv_team
+    ADD CONSTRAINT uk_7m26sod48nvwd090ohy741di4 UNIQUE (standings_uuid);
 
 
 --
@@ -253,6 +463,22 @@ ALTER TABLE ONLY t_team
 
 
 --
+-- Name: uk_dd3mwi5u0j6g2vw68sujjnr54; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_suhv_game
+    ADD CONSTRAINT uk_dd3mwi5u0j6g2vw68sujjnr54 UNIQUE (id);
+
+
+--
+-- Name: uk_dwanmaenaonj7jxj8fr5mfuw; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_suhv_club
+    ADD CONSTRAINT uk_dwanmaenaonj7jxj8fr5mfuw UNIQUE (id);
+
+
+--
 -- Name: uk_eeb5dwa84vaa3p7rcb3s66y7k; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
 --
 
@@ -261,11 +487,43 @@ ALTER TABLE ONLY t_team_player
 
 
 --
+-- Name: uk_f7e8wd9d6tfb4sfbe7de2awro; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_suhv_team
+    ADD CONSTRAINT uk_f7e8wd9d6tfb4sfbe7de2awro UNIQUE (id);
+
+
+--
 -- Name: uk_jjfob8lq6bxlkwuphm9t9ofrs; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
 --
 
 ALTER TABLE ONLY t_team
     ADD CONSTRAINT uk_jjfob8lq6bxlkwuphm9t9ofrs UNIQUE (name);
+
+
+--
+-- Name: uk_mtbm3vgkch6gymxafq2dmw9io; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_suhv_gym
+    ADD CONSTRAINT uk_mtbm3vgkch6gymxafq2dmw9io UNIQUE (id);
+
+
+--
+-- Name: uk_rnxy1f6vt5x39mospi2mlnod0; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_suhv_standings
+    ADD CONSTRAINT uk_rnxy1f6vt5x39mospi2mlnod0 UNIQUE (team_uuid);
+
+
+--
+-- Name: uk_s5kn3e3h14v6bf7jn7vsvq5nv; Type: CONSTRAINT; Schema: public; Owner: uht; Tablespace: 
+--
+
+ALTER TABLE ONLY t_suhv_club
+    ADD CONSTRAINT uk_s5kn3e3h14v6bf7jn7vsvq5nv UNIQUE (name);
 
 
 --
@@ -285,11 +543,43 @@ ALTER TABLE ONLY t_news
 
 
 --
+-- Name: fk_7m26sod48nvwd090ohy741di4; Type: FK CONSTRAINT; Schema: public; Owner: uht
+--
+
+ALTER TABLE ONLY t_suhv_team
+    ADD CONSTRAINT fk_7m26sod48nvwd090ohy741di4 FOREIGN KEY (standings_uuid) REFERENCES t_suhv_standings(uuid);
+
+
+--
+-- Name: fk_9hnlx829topqoaygkwlhbx492; Type: FK CONSTRAINT; Schema: public; Owner: uht
+--
+
+ALTER TABLE ONLY t_suhv_game
+    ADD CONSTRAINT fk_9hnlx829topqoaygkwlhbx492 FOREIGN KEY (gym_uuid) REFERENCES t_suhv_gym(uuid);
+
+
+--
 -- Name: fk_bdcuvy43iogdixuugltku971f; Type: FK CONSTRAINT; Schema: public; Owner: uht
 --
 
 ALTER TABLE ONLY t_user_authority
     ADD CONSTRAINT fk_bdcuvy43iogdixuugltku971f FOREIGN KEY (user_uuid) REFERENCES t_user(uuid);
+
+
+--
+-- Name: fk_bhlcfqoc2a6xrhwooeqd8on6h; Type: FK CONSTRAINT; Schema: public; Owner: uht
+--
+
+ALTER TABLE ONLY t_suhv_standings_entry
+    ADD CONSTRAINT fk_bhlcfqoc2a6xrhwooeqd8on6h FOREIGN KEY (standings_uuid) REFERENCES t_suhv_standings(uuid);
+
+
+--
+-- Name: fk_et4gdn1lv39720m8l2mvqlofn; Type: FK CONSTRAINT; Schema: public; Owner: uht
+--
+
+ALTER TABLE ONLY t_suhv_team
+    ADD CONSTRAINT fk_et4gdn1lv39720m8l2mvqlofn FOREIGN KEY (club_uuid) REFERENCES t_suhv_club(uuid);
 
 
 --
@@ -314,6 +604,22 @@ ALTER TABLE ONLY t_team_player
 
 ALTER TABLE ONLY t_event_t_team
     ADD CONSTRAINT fk_kjtf8hpnxyn62g6i3kssh7p2u FOREIGN KEY (t_event_uuid) REFERENCES t_event(uuid);
+
+
+--
+-- Name: fk_rbu06iekrio9i3wtgwa3f2b2m; Type: FK CONSTRAINT; Schema: public; Owner: uht
+--
+
+ALTER TABLE ONLY t_suhv_game
+    ADD CONSTRAINT fk_rbu06iekrio9i3wtgwa3f2b2m FOREIGN KEY (team_uuid) REFERENCES t_suhv_team(uuid);
+
+
+--
+-- Name: fk_rnxy1f6vt5x39mospi2mlnod0; Type: FK CONSTRAINT; Schema: public; Owner: uht
+--
+
+ALTER TABLE ONLY t_suhv_standings
+    ADD CONSTRAINT fk_rnxy1f6vt5x39mospi2mlnod0 FOREIGN KEY (team_uuid) REFERENCES t_suhv_team(uuid);
 
 
 --
