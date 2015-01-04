@@ -1,18 +1,23 @@
 package ch.uhttraktor.website.domain.suhv;
 
 import ch.uhttraktor.website.domain.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.*;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 @Getter
 @Setter
@@ -21,6 +26,22 @@ import java.time.Instant;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Table(name = "t_suhv_game")
 public class Game extends BaseEntity {
+
+    @Transient
+    @JsonIgnore
+    @XmlTransient
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+
+    @Transient
+    @JsonIgnore
+    @XmlTransient
+
+    private static final ZoneId ZONE_ID = ZoneId.of("Europe/Zurich");
+
+    @Transient
+    @JsonIgnore
+    @XmlTransient
+    private final Logger log = LogManager.getLogger(Game.class);
 
     @NotNull
     @XmlAttribute(name = "id")
@@ -79,9 +100,18 @@ public class Game extends BaseEntity {
     @Column(unique = false, nullable = true, length = 64)
     private String roundText;
 
-    // TODO not yet implemented
     @Column(name = "c_date", unique = false, nullable = true)
     private Instant date;
+
+    @Transient
+    @JsonIgnore
+    @XmlAttribute(name = "date")
+    private String dateStr;
+
+    @Transient
+    @JsonIgnore
+    @XmlAttribute(name = "time")
+    private String timeStr;
 
     @NotNull
     @XmlAttribute(name = "hometeamid")
@@ -164,5 +194,20 @@ public class Game extends BaseEntity {
     @NotNull
     @ManyToOne(optional = false)
     private SuhvTeam team;
+
+    @PrePersist
+    public void updateDate() {
+        if (dateStr != null && timeStr != null) {
+            try {
+                LocalDateTime localDateTime = LocalDateTime.parse(dateStr + " " + timeStr, FORMATTER);
+                ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, ZONE_ID);
+                date = zonedDateTime.toInstant();
+            } catch (UnsupportedOperationException | IllegalArgumentException | DateTimeParseException e) {
+                log.error("Update of date-field not possible: dateTime='{}'", dateStr + " " + timeStr, e);
+            }
+        } else {
+            log.debug("Update of date-field not possible: date='{}', time='{}'", dateStr, timeStr);
+        }
+    }
 
 }
