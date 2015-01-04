@@ -9,8 +9,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,6 +20,6 @@ import java.util.List;
 public class TeamResponse {
 
     @XmlElement(name = "team")
-    private List<SuhvTeam> teams = new LinkedList<>();
+    private Set<SuhvTeam> teams = new HashSet<>();
 
 }

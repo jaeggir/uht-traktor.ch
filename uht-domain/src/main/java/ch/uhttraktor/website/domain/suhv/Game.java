@@ -35,7 +35,6 @@ public class Game extends BaseEntity {
     @Transient
     @JsonIgnore
     @XmlTransient
-
     private static final ZoneId ZONE_ID = ZoneId.of("Europe/Zurich");
 
     @Transient
@@ -195,7 +194,6 @@ public class Game extends BaseEntity {
     @ManyToOne(optional = false)
     private SuhvTeam team;
 
-    @PrePersist
     public void updateDate() {
         if (dateStr != null && timeStr != null) {
             try {

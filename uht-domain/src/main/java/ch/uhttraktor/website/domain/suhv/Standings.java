@@ -4,16 +4,16 @@ package ch.uhttraktor.website.domain.suhv;
 import ch.uhttraktor.website.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -77,7 +77,7 @@ public class Standings extends BaseEntity {
     @XmlElement(name = "entry")
     @Cascade(CascadeType.ALL)
     @OneToMany(mappedBy = "standings", orphanRemoval = true)
-    private List<StandingsEntry> entries;
+    private Set<StandingsEntry> entries = new HashSet<>();
 
     @NotNull
     @OneToOne(mappedBy = "standings", optional = false)

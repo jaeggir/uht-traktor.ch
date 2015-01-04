@@ -18,16 +18,13 @@ import javax.inject.Inject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class SyncSuhvJob extends TransactionalTask {
 
-    protected final Logger log = LogManager.getLogger(SyncSuhvJob.class);
+    private final Logger log = LogManager.getLogger(SyncSuhvJob.class);
 
     private static final String API_END_POINT = "http://api.swissunihockey.ch/rest/v1.0/";
 
@@ -93,10 +90,10 @@ public class SyncSuhvJob extends TransactionalTask {
                             for (Integer season : seasons) {
 
                                 // get teams for the given club and season
-                                List<SuhvTeam> teams = getTeams(client, club, season);
+                                Set<SuhvTeam> teams = getTeams(client, club, season);
                                 for (SuhvTeam team : teams) {
 
-                                    log.info("Syncing season {} of '{}'", season, team.getTeamName());
+                                    log.info("Syncing season {} of '{}' ({})", season, team.getTeamName(), team.getId());
 
                                     // finally, sync the team
                                     syncTeam(client, club, team, season);
@@ -130,7 +127,7 @@ public class SyncSuhvJob extends TransactionalTask {
         }
     }
 
-    private List<SuhvTeam> getTeams(Client client, Club club, Integer season) {
+    private Set<SuhvTeam> getTeams(Client client, Club club, Integer season) {
         TeamResponse teams = client.target(API_END_POINT)
                 .path("clubs/" + club.getId() + "/teams")
                 .queryParam("season", season)
@@ -156,10 +153,8 @@ public class SyncSuhvJob extends TransactionalTask {
             club.getTeams().add(team);
             clubRepository.save(club);
         } else {
-
+            // TODO
         }
-
-        // save club
     }
 
     private void requestStandings(Client client, SuhvTeam team, Integer season) {
@@ -171,7 +166,6 @@ public class SyncSuhvJob extends TransactionalTask {
                 .header("apikey", apiKey)
                 .get(Standings.class);
 
-        // set attributes we don't get from API
         standings.setTeam(team);
         standings.setSeason(season);
         for (StandingsEntry entry :standings.getEntries()) {
@@ -195,6 +189,7 @@ public class SyncSuhvJob extends TransactionalTask {
         for (Game game : games.getGames()) {
             game.setTeam(team);
             updateGym(client, game);
+            game.updateDate();
         }
 
         team.setGames(games.getGames());

@@ -13,7 +13,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -63,7 +64,7 @@ public class SuhvTeam extends BaseEntity {
 
     @Cascade(CascadeType.ALL)
     @OneToMany(mappedBy = "team", orphanRemoval = true)
-    private List<Game> games;
+    private Set<Game> games = new HashSet<>();
 
     @NotNull
     @Cascade(CascadeType.ALL)

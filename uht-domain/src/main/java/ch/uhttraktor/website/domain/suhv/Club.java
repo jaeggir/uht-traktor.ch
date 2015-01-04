@@ -13,7 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -40,6 +41,6 @@ public class Club extends BaseEntity {
 
     @Cascade(CascadeType.ALL)
     @OneToMany(mappedBy = "club", fetch = LAZY, orphanRemoval = true)
-    private List<SuhvTeam> teams;
+    private Set<SuhvTeam> teams = new HashSet<>();
 
 }
