@@ -208,36 +208,39 @@ public class SyncSuhvJob extends TransactionalTask {
             game.setGym(null);
             return;
         } else {
-            try {
-                Gym gym = client.target(API_END_POINT)
-                        .path("gyms/" + game.getGym().getId())
-                        .request(MediaType.APPLICATION_XML)
-                        .header("apikey", apiKey)
-                        .get(Gym.class);
 
-                Gym existingGym = gymRepository.findById(game.getGym().getId());
-                if (existingGym == null) {
-                    // new gym
-                    existingGym = gymRepository.save(gym);
-                } else {
+            Gym existingGym = gymRepository.findById(game.getGym().getId());
 
-                    // update existing gym
-                    existingGym.setName(trim(gym.getName()));
-                    existingGym.setStreet(trim(gym.getStreet()));
-                    existingGym.setZip(gym.getZip());
-                    existingGym.setCity(trim(gym.getCity()));
-                    existingGym.setCountry(trim(gym.getCountry()));
-                    existingGym.setPosition(gym.getPosition());
+            // check if existing gym is valid
+            if (existingGym != null && existingGym.getPosition() != null
+                    && existingGym.getPosition().getLat() != null && existingGym.getPosition().getLng() != null) {
 
-                    // merge
-                    existingGym = gymRepository.save(existingGym);
-
-                }
-                // assign updated gym to game
+                // we already have the gym in our database
                 game.setGym(existingGym);
-            } catch (javax.ws.rs.NotFoundException e) {
-                log.debug("Gym with id='{}' not found. msg={}", game.getGym().getId(), e.getMessage());
-                game.setGym(null);
+
+            } else {
+
+                try {
+                    Gym gym = client.target(API_END_POINT)
+                            .path("gyms/" + game.getGym().getId())
+                            .request(MediaType.APPLICATION_XML)
+                            .header("apikey", apiKey)
+                            .get(Gym.class);
+
+                    // trim some fields which have weird values sometimes
+                    gym.setName(trim(gym.getName()));
+                    gym.setStreet(trim(gym.getStreet()));
+                    gym.setCity(trim(gym.getCity()));
+                    gym.setCountry(trim(gym.getCountry()));
+
+                    // save in DB and assign to game
+                    gym = gymRepository.save(gym);
+                    game.setGym(gym);
+
+                } catch (javax.ws.rs.NotFoundException e) {
+                    log.debug("Gym with id='{}' not found. msg={}", game.getGym().getId(), e.getMessage());
+                    game.setGym(null);
+                }
             }
         }
     }
