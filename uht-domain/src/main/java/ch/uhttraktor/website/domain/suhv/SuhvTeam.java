@@ -72,4 +72,5 @@ public class SuhvTeam extends BaseEntity {
 
     @ManyToOne(optional = false)
     private Club club;
+
 }

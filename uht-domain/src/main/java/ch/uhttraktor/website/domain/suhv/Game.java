@@ -83,12 +83,12 @@ public class Game extends BaseEntity {
     @Size(max = 64)
     @XmlAttribute(name = "tableautext")
     @Column(unique = false, nullable = true, length = 64)
-    private Integer tableauText;
+    private String tableauText;
 
     @Size(max = 64)
     @XmlAttribute(name = "gametext")
     @Column(unique = false, nullable = true, length = 64)
-    private Integer gameText;
+    private String gameText;
 
     @NotNull
     @XmlAttribute(name = "round")

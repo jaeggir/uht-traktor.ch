@@ -158,7 +158,7 @@ CREATE TABLE t_suhv_game (
     eventtype character varying(32) NOT NULL,
     fieldsize character varying(64),
     forfait boolean NOT NULL,
-    gametext integer,
+    gametext character varying(64),
     goalsaway integer NOT NULL,
     goalshome integer NOT NULL,
     hometeamid integer NOT NULL,
@@ -175,7 +175,7 @@ CREATE TABLE t_suhv_game (
     c_round integer NOT NULL,
     roundtext character varying(64),
     tableau integer,
-    tableautext integer,
+    tableautext character varying(64),
     gym_uuid character varying(255),
     team_uuid character varying(255) NOT NULL
 );
