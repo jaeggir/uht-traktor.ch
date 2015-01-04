@@ -1,9 +1,7 @@
 package ch.uhttraktor.website.rest.service.cron;
 
 import ch.uhttraktor.website.domain.suhv.*;
-import ch.uhttraktor.website.persistence.suhv.ClubRepository;
-import ch.uhttraktor.website.persistence.suhv.GymRepository;
-import ch.uhttraktor.website.persistence.suhv.SuhvTeamRepository;
+import ch.uhttraktor.website.persistence.suhv.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.glassfish.jersey.client.ClientConfig;
@@ -152,15 +150,40 @@ public class SyncSuhvJob extends TransactionalTask {
     }
 
     private void syncTeam(Client client, Club club, SuhvTeam team, Integer season) {
-        requestStandings(client, team, season);
-        requestGames(client, team, season);
-
         SuhvTeam existingTeam = suhvTeamRepository.findByIdAndSeason(team.getId(), season);
+
         if (existingTeam == null) {
+
+            // this team is not yet in our database - fetch & save everything!
+
+            requestStandings(client, team, season);
+            requestGames(client, team, season);
+
             club.getTeams().add(team);
             clubRepository.save(club);
+
+        } else if (currentSeason.equals(season)) {
+
+            // this team is not yet in our database - fetch & save everything!
+
+            requestStandings(client, team, season);
+            requestGames(client, team, season);
+
+            boolean removed = club.getTeams().remove(existingTeam);
+            if (!removed) {
+               log.error("Existing team was not removed from club, teamUuid={}", existingTeam.getUuid());
+            } else {
+                suhvTeamRepository.remove(existingTeam);
+                suhvTeamRepository.flush();
+
+                club.getTeams().add(team);
+                clubRepository.save(club);
+            }
+
         } else {
-            // TODO
+            // Ignore team - we already have it in our database and it is from an old seasons, so there won't be any
+            // game or standings update. Later we can introduce a 'force' mode to refresh all teams.
+            log.info("Ignore season {} of team '{}'", season, team.getId());
         }
     }
 
