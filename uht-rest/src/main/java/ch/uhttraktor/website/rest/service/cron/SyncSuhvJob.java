@@ -79,7 +79,7 @@ public class SyncSuhvJob extends TransactionalTask {
                     @Override
                     protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
 
-                        // sync clubs (currently there is only one, UHT of course :))
+                        // sync all clubs
                         List<Club> clubs = clubRepository.findAll();
                         for (Club club : clubs) {
 
@@ -88,6 +88,9 @@ public class SyncSuhvJob extends TransactionalTask {
                             // get possible seasons for this club based on starting season and current date
                             List<Integer> seasons = getSeasons(club);
                             for (Integer season : seasons) {
+
+                                // reload club as we flush and clear later
+                                club = clubRepository.findOne(club.getUuid());
 
                                 // get teams for the given club and season
                                 Set<SuhvTeam> teams = getTeams(client, club, season);
@@ -98,6 +101,10 @@ public class SyncSuhvJob extends TransactionalTask {
                                     // finally, sync the team
                                     syncTeam(client, club, team, season);
                                 }
+
+                                // for performance reasons, flush & clear here
+                                clubRepository.flush();
+                                clubRepository.clear();
                             }
                         }
                     }
@@ -187,9 +194,9 @@ public class SyncSuhvJob extends TransactionalTask {
                 .get(GamesResponse.class);
 
         for (Game game : games.getGames()) {
+            game.updateDate();
             game.setTeam(team);
             updateGym(client, game);
-            game.updateDate();
         }
 
         team.setGames(games.getGames());
