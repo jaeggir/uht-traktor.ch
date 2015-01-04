@@ -140,10 +140,11 @@ public class SyncSuhvJob extends TransactionalTask {
                 .header("apikey", apiKey)
                 .get(TeamResponse.class);
 
-        // set attributes we don't get from the API
+        // set attributes we don't get from the API, trim teamRomanCounter
         for (SuhvTeam team : teams.getTeams()) {
             team.setClub(club);
             team.setSeason(season);
+            team.setTeamRomanCounter(trim(team.getTeamRomanCounter()));
         }
 
         return teams.getTeams();
@@ -219,6 +220,7 @@ public class SyncSuhvJob extends TransactionalTask {
         for (Game game : games.getGames()) {
             game.updateDate();
             game.setTeam(team);
+            game.setGameText(trim(game.getGameText()));
             updateGym(client, game);
         }
 
